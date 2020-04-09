@@ -1,0 +1,61 @@
+public function getList () {
+        $loai_ban = loai_ban::all();
+        return view('admin.table_type.table_type',['loai_ban'=>$loai_ban]);
+    }
+    public function getAdd () {
+        $khu_vuc = khu_vuc::all();
+        return view('admin.table_type.add', ['khu_vuc' => $khu_vuc]);
+    }
+    public function postAdd (Request $request) {
+        $this->validate($request,
+        [
+            'Ten' => 'required|min:4|max:30|unique:loai_ban,ten_loai_ban',
+            'KhuVuc' => 'required'
+        ],
+        [
+            'Ten.required'=>'Bạn chưa nhập tên',
+            'Ten.unique'=>'Tên loại bàn đã tồn tại',
+            'Ten.min'=>'Phải có ít nhất 4 ký tự',
+            'Ten.max'=>'Độ dài không quá 30 ký tự',
+            'KhuVuc.required'=>'Bạn chưa chon tên khu vực'
+        ]);
+
+        $loai_ban = new loai_ban;
+        $loai_ban->ten_loai_ban = $request->Ten;
+        $loai_ban->id_khu_vuc = $request->KhuVuc;
+        $loai_ban->save();
+
+        return redirect('admin/table_type/add')->with('thongbao','Thêm thành công');
+    }
+    public function getUpdate ($id) {
+        $khu_vuc = khu_vuc::all();
+        $loai_ban = loai_ban::find($id);
+        return view('admin.table_type.update', ['loai_ban' => $loai_ban, 'khu_vuc' => $khu_vuc]);
+    }
+    public function postUpdate (Request $request, $id) {
+        $this->validate($request,
+        [
+            'Ten' => 'required|min:4|max:30|unique:loai_ban,ten_loai_ban',
+            'KhuVuc' => 'required'
+        ],
+        [
+            'Ten.required'=>'Bạn chưa nhập tên',
+            'Ten.unique'=>'Tên loại bàn đã tồn tại',
+            'Ten.min'=>'Phải có ít nhất 4 ký tự',
+            'Ten.max'=>'Độ dài không quá 30 ký tự',
+            'KhuVuc.required'=>'Bạn chưa chọn tên khu vực'
+        ]);
+        $loai_ban = loai_ban::find($id);
+        $loai_ban->ten_loai_ban = $request->Ten;
+        $loai_ban->id_khu_vuc = $request->KhuVuc;
+        $loai_ban->save();
+
+        return redirect('admin/table_type/update/'.$id)->with('thongbao','Cập nhật thành công');
+    }
+
+    public function getDelete ($id) {
+        $loai_ban = loai_ban::find($id);
+        $loai_ban->delete();
+
+        return redirect('admin/table_type/table_type')->with('thongbao','Xóa thành công');
+    }
