@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Illuminate\Http\Request;
 
 class User extends BaseModel
 {
@@ -14,9 +15,14 @@ class User extends BaseModel
 
     protected $fillable = [
         'user_id',
-        'user_code',
-        'user_name',
+        'email',
+        'password',
+        'name',
+        'tel',
+        'sex',
+        'dob',
         'level',
+        'district_id',
         'created_at',
         'updated_at',
         'deleted_at',

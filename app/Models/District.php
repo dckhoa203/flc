@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Illuminate\Http\Request;
 
 class District extends BaseModel
 {
-    protected $table = 'comments';
+    protected $table = 'districts';
 
     protected $primaryKey = 'district_id';
 
@@ -34,5 +35,10 @@ class District extends BaseModel
             'district_id' => 1
         ];
         return parent::base_update($this->request);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id','city_id');
     }
 }

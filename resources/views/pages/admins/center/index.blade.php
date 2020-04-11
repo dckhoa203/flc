@@ -17,10 +17,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Tỉnh / Thành phố</h3>
+                            <h3 class="box-title">Trung tâm ngoại ngữ</h3>
                             <br>
                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                <a style="width:80px" href="{{route('city.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
+                                <a style="width:80px" href="{{route('center.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
                             {{-- @endif --}}
                             <br>
                             <br>
@@ -30,7 +30,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID:</th>
-                                            <th>Tên quận/huyện:</th>
+                                            <th>Tên trung tâm:</th>
                                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                 <th>Chức năng</th>
                                             {{-- @else --}}
@@ -41,12 +41,12 @@
                                     <tbody  style="font-size: 12px">
                                         @foreach ($data as $item)
                                             <tr>
-                                                <td>{{$item['city_id']}}</td>
-                                                <td>{{$item['city_name']}}</td>
+                                                <td>{{$item['center_id']}}</td>
+                                                <td>{{$item['center_name']}}</td>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <td>
-                                                        <form action="{{ route('city.destroy', $item->city_id) }}" method="post" class="delete_form">
-                                                            <a  href="{{ action('Master\CityController@edit',$item->city_id) }}" data-toggle="toolytip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                        <form action="{{ route('center.destroy', $item->center_id) }}" method="post" class="delete_form">
+                                                            <a  href="{{ action('Master\CenterController@edit',$item->center_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
                                                             @csrf
                                                             <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                         </form>
@@ -81,7 +81,7 @@
         // Họp thoại cảnh báo xóa
         $(document).ready(function () {
             $('.delete_form').on('submit',function(){
-                if(confirm('Bạn có muốn xóa quận/huyện này không?'))
+                if(confirm('Bạn có muốn xóa trung tâm này không?'))
                 {
                     return true;
                 }

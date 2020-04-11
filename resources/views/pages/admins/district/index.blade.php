@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {{-- <div class="white-box"> --}}
-                                <h3 class="box-title">Tỉnh / Thành phố</h3>
+                                <h3 class="box-title">Quận Huyện</h3>
                                 <br>
-                                {{-- @if (Auth::user()->hasRole('Admin'))
-                                    <a style="width:80px" href="{{route('khoa-vien/them')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
-                                @endif --}}
+                                {{-- @if (Auth::user()->hasRole('Admin')) --}}
+                                    <a style="width:80px" href="{{route('district.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
+                                {{-- @endif --}}
                                 <br>
                                 <br>
                                 <br>
@@ -29,8 +29,9 @@
                                     <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                         <thead>
                                             <tr>
-                                                <th>ID tỉnh:</th>
-                                                <th>Tên khoa:</th>
+                                                <th>ID:</th>
+                                                <th>Tên Quận/Huyện:</th>
+                                                <th>Tên tỉnh/thành phố:</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -41,8 +42,9 @@
                                         <tbody  style="font-size: 12px">
                                             @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{$item['city_id']}}</td>
-                                                    <td>{{$item['city_name']}}</td>
+                                                    <td>{{$item['district_id']}}</td>
+                                                    <td>{{$item['district_name']}}</td>
+                                                    <td>{{$item->city->city_name}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
                                                             <form action="{{ route('city.destroy', $item->city_id) }}" method="post" class="delete_form">

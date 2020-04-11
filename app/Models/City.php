@@ -35,4 +35,9 @@ class City extends BaseModel
         ];
         return parent::base_update($this->request);
     }
+
+    public function district()
+    {
+        return $this->hasMany(District::class, 'city_id', 'city_id');
+    }
 }

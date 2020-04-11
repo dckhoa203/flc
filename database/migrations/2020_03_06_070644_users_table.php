@@ -16,9 +16,14 @@ class UsersTable extends Migration
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->increments('user_id')->comment('id');
-                $table->string('user_code', 12)->comment('mã trung tâm');
-                $table->string('user_name')->comment('tên trung tâm');
-                $table->integer('level')->unsigned()->comment('phân quyền cấp từ 0...3');
+                $table->string('email', 191)->comment('tên đăng nhập - email');
+                $table->string('password')->comment('mật khẩu');
+                $table->string('name')->comment('họ và tên');
+                $table->string('tel')->nullable()->comment('số điện thoại');
+                $table->string('sex')->nullable()->comment('giới tính');
+                $table->date('dob')->nullable()->comment('ngày sinh');
+                $table->integer('level')->comment('phân quyền cấp từ 0...3');
+                $table->integer('district_id')->unsigned()->nullable()->comment('id quận huyện');
 
                 // log time
                 $table->timestamp('created_at')
@@ -33,7 +38,7 @@ class UsersTable extends Migration
                     ->nullable()
                     ->comment('ngày xóa tạm');
                 // Setting unique
-                $table->unique(['user_code']);
+                $table->unique(['email']);
             });
             DB::statement("ALTER TABLE `users` comment 'Thông tin một người dùng'");
         }
