@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\District;
+use App\Models\City;
 
 class DistrictController extends Controller
 {
@@ -29,7 +30,8 @@ class DistrictController extends Controller
 
     public function create (Request $request)
     {
-        return view('pages.admins.district.create');
+        $city = City::all();
+        return view('pages.admins.district.create', ['city' => $city]);
     }
 
     public function create_submit(Request $request)
@@ -47,8 +49,9 @@ class DistrictController extends Controller
     public function edit($district_id)
     {
         $district = District::findOrFail($district_id);
+        $city = City::all();
 
-        return view('pages.admins.district.edit', ['district' => $district]);
+        return view('pages.admins.district.edit', ['district' => $district, 'city' => $city]);
     }
 
     public function update(Request $request, $district_id)
@@ -63,7 +66,7 @@ class DistrictController extends Controller
 
     public function destroy($district_id)
     {
-        $data = City::findOrFail($district_id);
+        $data = District::findOrFail($district_id);
         $data->delete();
         
         return redirect('district')->with('success', 'Xóa thành công!');
