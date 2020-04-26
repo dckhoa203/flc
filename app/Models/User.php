@@ -42,4 +42,9 @@ class User extends BaseModel
         ];
         return parent::base_update($this->request);
     }
+
+    public function post()
+    {
+        return $this->hasMany(Post::class, 'user_id', 'user_id');
+    }
 }

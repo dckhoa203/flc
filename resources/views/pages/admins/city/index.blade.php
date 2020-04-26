@@ -20,7 +20,7 @@
                             <h3 class="box-title">Tỉnh / Thành phố</h3>
                             <br>
                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                <a style="width:80px" href="{{route('city.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
+                                {{-- <a style="width:80px" href="{{route('city.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a> --}}
                             {{-- @endif --}}
                             <br>
                             <br>
@@ -77,6 +77,12 @@
         // Sắp xếp
         $(document).ready(function() {
             $('#myTable').DataTable();
+        });
+        // an thong bao
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('#showMessage').hide()            
+            },1000)
         });
         // Họp thoại cảnh báo xóa
         $(document).ready(function () {

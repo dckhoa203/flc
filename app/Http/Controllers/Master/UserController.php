@@ -65,6 +65,6 @@ class UserController extends Controller
         $data = User::findOrFail($user_id);
         $data->delete();
         
-        return redirect('user')->with('success', 'Xóa thành công!');
+        return back()->with('success', 'Xóa thành công!');
     }
 }

@@ -60,3 +60,23 @@ Route::prefix('center')->group(function () {
     Route::post('/update/{center_id}', 'Master\CenterController@update')->name('center.update');
     Route::post('/destroy/{center_id}', 'Master\CenterController@destroy')->name('center.destroy');
 });
+
+// POST
+Route::prefix('post')->group(function () {
+    Route::get('/', 'Master\PostController@index')->name('post.index');
+    Route::get('/create', 'Master\PostController@create')->name('post.create');
+    Route::post('/create_submit', 'Master\PostController@create_submit')->name('post.create_submit');
+    Route::get('/edit/{post_id}', 'Master\PostController@edit')->name('post.edit');
+    Route::post('/update/{post_id}', 'Master\PostController@update')->name('post.update');
+    Route::post('/destroy/{post_id}', "Master\PostController@destroy")->name('post.destroy');
+});
+
+// POST
+Route::prefix('branch')->group(function () {
+    Route::get('/', 'Master\BranchController@index')->name('branch.index');
+    Route::get('/create', 'Master\BranchController@create')->name('branch.create');
+    Route::post('/create_submit', 'Master\BranchController@create_submit')->name('branch.create_submit');
+    Route::get('/edit/{post_id}', 'Master\BranchController@edit')->name('branch.edit');
+    Route::post('/update/{post_id}', 'Master\BranchController@update')->name('branch.update');
+    Route::post('/destroy/{post_id}', "Master\BranchController@destroy")->name('branch.destroy');
+});

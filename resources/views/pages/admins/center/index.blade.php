@@ -7,9 +7,9 @@
 </style>
 <div id="page-wrapper">
     @if($message = Session::get('success'))
-        <div class="alert alert-success" role="alert">
-            <p>{{$message}}</p>
-            <p class="mb-0"></p>
+        <div class="alert alert-success" role="alert" id='showMessage'
+            style="position: fixed;width: 50%;padding: 7px">
+            <span>{{$message}}</span>
         </div>
     @endif
         <div class="container-fluid">
@@ -77,6 +77,12 @@
         // Sắp xếp
         $(document).ready(function() {
             $('#myTable').DataTable();
+        });
+        // an thong bao
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('#showMessage').hide()            
+            },1000)
         });
         // Họp thoại cảnh báo xóa
         $(document).ready(function () {

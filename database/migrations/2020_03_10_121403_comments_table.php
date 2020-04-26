@@ -19,6 +19,7 @@ class CommentsTable extends Migration
                 $table->text('content')->comment('nội dung bình luận');
                 $table->integer('post_id')->unsigned()->comment('id bài viết');
                 $table->integer('user_id')->unsigned()->comment('id user');
+                $table->integer('reply_id')->unsigned()->comment('id trả lời bình luận (cũng là 1 bình luận)');
 
                 // log time
                 $table->timestamp('created_at')

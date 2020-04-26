@@ -65,6 +65,6 @@ class CityController extends Controller
         $data = City::findOrFail($city_id);
         $data->delete();
         // dd($data);
-        return redirect('city')->with('success', 'Xóa thành công!');
+        return back()->with('success', 'Xóa thành công!');
     }
 }

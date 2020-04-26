@@ -37,4 +37,14 @@ class Branch extends BaseModel
         ];
         return parent::base_update($this->request);
     }
+
+    public function center()
+    {
+        return $this->belongsTo(Center::class,'center_id','center_id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class,'district_id','district_id');
+    }
 }

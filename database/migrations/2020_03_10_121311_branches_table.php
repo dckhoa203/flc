@@ -16,6 +16,7 @@ class BranchesTable extends Migration
         if (!Schema::hasTable('branches')) {
             Schema::create('branches', function (Blueprint $table) {
                 $table->increments('branch_id')->comment('id');
+                $table->string('branch_name')->comment('tên chi nhánh');
                 $table->string('address')->comment('tiêu đề bài viết');
                 $table->integer('center_id')->unsigned()->comment('id user');
                 $table->integer('district_id')->unsigned()->comment('id quận huyện');

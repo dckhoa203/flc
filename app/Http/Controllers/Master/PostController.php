@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Center;
+use App\Models\Post;
 
-class CenterController extends Controller
+class PostController extends Controller
 {
     // Hàm khởi tạo.
     public function __construct()
@@ -18,53 +18,55 @@ class CenterController extends Controller
     public function index (Request $request)
     {
         $config = [
-            'model' => new Center(),
+            'model' => new Post(),
             'request' => $request,
         ];
         $this->config($config);
         $data = $this->model->web_index($this->request);
-
-        return view('pages.admins.center.index', ['data' => $data]);
+       
+        return view('pages.admins.post.index', ['data' => $data]);
     }
 
     public function create (Request $request)
     {
-        return view('pages.admins.center.create');
+        return view('pages.admins.post.create');
     }
 
     public function create_submit(Request $request)
     {
         $config = [
-            'model' => new Center(),
+            'model' => new Post(),
             'request' => $request,
         ];
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('center')->with('success', 'Thêm thành công');
+        return back()->with('success', 'Thêm thành công');
     }
 
-    public function edit($center_id)
+    public function edit($post_id)
     {
-        $center = Center::findOrFail($center_id);
+        $post = Post::findOrFail($post_id);
 
-        return view('pages.admins.center.edit', ['center' => $center]);
+        return view('pages.admins.post.edit', ['post' => $post]);
     }
 
-    public function update(Request $request, $center_id)
+    public function update(Request $request, $post_id)
     {
-        $center = Center::find($center_id);
-        $center->center_name = $request->get('center_name');
-        $center->save();
+        $post = Post::find($post_id);
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
+        $post->user_id = $request->get('user_id');
+        $post->save();
         
-        return redirect('center')->with('success', 'Cập nhật thành công');
+        return back()->with('success', 'Cập nhật thành công');
     }
 
-    public function destroy($center_id)
+    public function destroy($post_id)
     {
-        $data = Center::findOrFail($center_id);
+        $data = Post::findOrFail($post_id);
         $data->delete();
-        // dd($data);
+        
         return back()->with('success', 'Xóa thành công!');
     }
 }

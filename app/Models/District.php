@@ -41,4 +41,9 @@ class District extends BaseModel
     {
         return $this->belongsTo(City::class,'city_id','city_id');
     }
+
+    public function branch_district()
+    {
+        return $this->hasMany(Branch::class, 'district_id', 'district_id');
+    }
 }

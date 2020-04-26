@@ -69,6 +69,6 @@ class DistrictController extends Controller
         $data = District::findOrFail($district_id);
         $data->delete();
         
-        return redirect('district')->with('success', 'Xóa thành công!');
+        return back()->with('success', 'Xóa thành công!');
     }
 }
