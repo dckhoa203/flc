@@ -17,7 +17,6 @@ class CategoriesTable extends Migration
             Schema::create('categories', function (Blueprint $table) {
                 $table->increments('category_id')->comment('id');
                 $table->string('category_name')->comment('tên thể loại');
-                $table->integer('post_id')->unsigned()->comment('id bài viết');
 
                 // log time
                 $table->timestamp('created_at')

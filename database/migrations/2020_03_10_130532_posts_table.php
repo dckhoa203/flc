@@ -18,7 +18,8 @@ class PostsTable extends Migration
                 $table->increments('post_id')->comment('id');
                 $table->string('title')->comment('tiêu đề bài viết');
                 $table->text('content')->comment('nội dung bài viết');
-                $table->integer('user_id')->unsigned()->comment('id user');
+                $table->integer('category_id')->nullable()->unsigned()->comment('id thể loại');
+                $table->integer('user_id')->nullable()->unsigned()->comment('id user');
 
                 // log time
                 $table->timestamp('created_at')

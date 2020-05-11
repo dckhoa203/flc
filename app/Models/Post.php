@@ -18,6 +18,7 @@ class Post extends BaseModel
         'title',
         'content',
         'user_id',
+        'category_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -41,5 +42,10 @@ class Post extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','user_id');
+    }
+
+    public function category() 
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');
     }
 }

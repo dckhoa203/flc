@@ -18,6 +18,7 @@ class Comment extends BaseModel
         'content',
         'post_id',
         'user_id',
+        'reply_id',
         'created_at',
         'updated_at',
         'deleted_at',

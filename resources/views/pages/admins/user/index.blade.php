@@ -29,13 +29,13 @@
                                 <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                     <thead>
                                         <tr>
-                                            <th>ID User:</th>
-                                            <th>Email:</th>
-                                            <th>Tên:</th>
-                                            <th>SĐT:</th>
-                                            <th>Giới tính:</th>
-                                            <th>Ngày sinh:</th>
-                                            <th>Địa Chỉ:</th>
+                                            <th>#</th>
+                                            <th>Email</th>
+                                            <th>Tên</th>
+                                            <th>SĐT</th>
+                                            <th>Giới tính</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Địa Chỉ</th>
                                             <th>Loại tài khoản</th>
                                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                 <th>Chức năng</th>
@@ -47,14 +47,14 @@
                                     <tbody  style="font-size: 12px">
                                         @foreach ($data as $item)
                                             <tr>
-                                                <td>{{$item['user_id']}}</td>
-                                                <td>{{$item['email']}}</td>
-                                                <td>{{$item['name']}}</td>
-                                                <td>{{$item['tel']}}</td>
-                                                <td>{{$item['sex']}}</td>
-                                                <td>{{$item['dob']}}</td>
-                                                <td>{{$item['district_id']}}</td>
-                                                <td>{{$item['level']}}</td>
+                                                <td>{{$item->user_id}}</td>
+                                                <td>{{$item->email}}</td>
+                                                <td>{{$item->name}}</td>
+                                                <td>{{$item->tel}}</td>
+                                                <td>{{$item->sex}}</td>
+                                                <td>{{$item->dob}}</td>
+                                                <td>{{$item->district_id}}</td>
+                                                <td>{{$item->level}}</td>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <td>
                                                         <form action="{{ route('user.destroy', $item->user_id) }}" method="post" class="delete_form">

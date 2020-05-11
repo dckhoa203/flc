@@ -29,8 +29,8 @@
                                 <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                     <thead>
                                         <tr>
-                                            <th>ID:</th>
-                                            <th>Tên quận/huyện:</th>
+                                            <th>#</th>
+                                            <th>Tên quận/huyện</th>
                                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                 <th>Chức năng</th>
                                             {{-- @else --}}
@@ -41,8 +41,8 @@
                                     <tbody  style="font-size: 12px">
                                         @foreach ($data as $item)
                                             <tr>
-                                                <td>{{$item['city_id']}}</td>
-                                                <td>{{$item['city_name']}}</td>
+                                                <td>{{$item->city_id}}</td>
+                                                <td>{{$item->city_name}}</td>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <td>
                                                         <form action="{{ route('city.destroy', $item->city_id) }}" method="post" class="delete_form">

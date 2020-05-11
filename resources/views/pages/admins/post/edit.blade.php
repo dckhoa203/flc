@@ -6,12 +6,20 @@
             <form action="{{route('post.update', $post->post_id)}}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="district_id" class="control-label">ID:</label>
+                    <label for="district_id" class="control-label">ID</label>
                 <input type="text" class="form-control" id="post_id" name="post_id" placeholder="" value="{{$post->post_id}}" disabled>
                 </div>
                 <div class="form-group">
-                        <label for="title" class="control-label">Tiêu đề:</label>
+                        <label for="title" class="control-label">Tiêu đề</label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="" value="{{$post->title}}">
+                </div>
+                <div class="form-group">
+                    <label for="category_id" class="control-label">Thể loại</label>
+                    <select name="city_id"  class="form-control pull-right">
+                        @foreach($category as $item)
+                            <option value="{{$item->category_id}}" @if($item->category_id == $post->category_id) selected @endif>{{$item->category_name}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="content" class="control-label">Nội dung:</label>

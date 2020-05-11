@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -29,7 +30,9 @@ class PostController extends Controller
 
     public function create (Request $request)
     {
-        return view('pages.admins.post.create');
+        $category = Category::all();
+
+        return view('pages.admins.post.create', compact('category'));
     }
 
     public function create_submit(Request $request)
@@ -47,8 +50,9 @@ class PostController extends Controller
     public function edit($post_id)
     {
         $post = Post::findOrFail($post_id);
+        $category = Category::all();
 
-        return view('pages.admins.post.edit', ['post' => $post]);
+        return view('pages.admins.post.edit', compact('post', 'category'));
     }
 
     public function update(Request $request, $post_id)
@@ -57,6 +61,7 @@ class PostController extends Controller
         $post->title = $request->get('title');
         $post->content = $request->get('content');
         $post->user_id = $request->get('user_id');
+        $post->categogy_id = $request->get('categogy_id');
         $post->save();
         
         return back()->with('success', 'Cập nhật thành công');

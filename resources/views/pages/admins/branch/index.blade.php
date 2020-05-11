@@ -8,19 +8,20 @@
     <div id="page-wrapper">
         @if($message = Session::get('success'))
             <div class="alert alert-success" role="alert" id='showMessage'
-            style="position: fixed;width: 50%;padding: 7px">
+                style="position: fixed;width: 50%;padding: 7px">
                 <span>{{$message}}</span>
             </div>
         @endif
+            
         <div class="container-fluid">
             <div class="white-box">
                     <div class="row">
                         <div class="col-sm-12">
                             {{-- <div class="white-box"> --}}
-                                <h3 class="box-title">Bài Đăng</h3>
+                                <h3 class="box-title">Chi Nhánh</h3>
                                 <br>
                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                    <a style="width:80px" href="{{route('post.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
+                                    <a style="width:80px" href="{{route('branch.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
                                 {{-- @endif --}}
                                 <br>
                                 <br>
@@ -30,11 +31,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tiêu đề</th>
-                                                <th>Nội dung</th>
-                                                <th>Tác giả</th>
-                                                <th>Thể loại</th>
-                                                <th>Email</th>
+                                                <th>Tên trung tâm</th>
+                                                <th>Địa chỉ</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -45,16 +43,13 @@
                                         <tbody  style="font-size: 12px">
                                             @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{$item->post_id}}</td>
-                                                    <td>{{$item->title}}</td>
-                                                    <td>{{$item->content}}</td>
-                                                    <td>{{$item->user->name}}</td>
-                                                    <td>{{$item->category->category_name}}</td>
-                                                    <td>{{$item->user->email}}</td>
+                                                    <td>{{$item->branch_id}}</td>
+                                                    <td>{{$item->center->center_name}}</td>
+                                                    <td>{{$item->address.', '.$item->district->district_name.', '.$item->district->city->city_name}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
-                                                            <form action="{{ route('post.destroy', $item->post_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Master\PostController@edit',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                            <form action="{{ route('branch.destroy', $item->branch_id) }}" method="post" class="delete_form">
+                                                                <a  href="{{ action('Master\BranchController@edit',$item->branch_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                             </form>
@@ -87,6 +82,7 @@
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
+
         // an thong bao
         $(document).ready(function(){
             setTimeout(function(){
@@ -96,7 +92,7 @@
         // Họp thoại cảnh báo xóa
         $(document).ready(function () {
             $('.delete_form').on('submit',function(){
-                if(confirm('Bạn có muốn xóa bài viết này không?'))
+                if(confirm('Bạn có muốn xóa Khoa/viện này không??'))
                 {
                     return true;
                 }
@@ -111,8 +107,8 @@
 
 @section('script')
 <script>
-$(function () 
-    $('[data-toggle="tooltip"]').tooltip();
-);
-</script>
+    $(function () 
+        $('[data-toggle="tooltip"]').tooltip();
+    );
+    </script>
 @endsection

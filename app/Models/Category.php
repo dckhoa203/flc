@@ -16,7 +16,6 @@ class Category extends BaseModel
     protected $fillable = [
         'category_id',
         'category_name',
-        'post_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -35,5 +34,10 @@ class Category extends BaseModel
             'categogy_id' => 1
         ];
         return parent::base_update($this->request);
+    }
+
+    public function post() 
+    {
+        return $this->hasMany(Post::class, 'category_id', 'category_id');
     }
 }

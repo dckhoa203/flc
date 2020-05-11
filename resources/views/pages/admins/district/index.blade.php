@@ -29,9 +29,9 @@
                                     <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                         <thead>
                                             <tr>
-                                                <th>ID:</th>
-                                                <th>Tên Quận/Huyện:</th>
-                                                <th>Tên tỉnh/thành phố:</th>
+                                                <th>#</th>
+                                                <th>Tên Quận/Huyện</th>
+                                                <th>Tên tỉnh/thành phố</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -42,8 +42,8 @@
                                         <tbody  style="font-size: 12px">
                                             @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{$item['district_id']}}</td>
-                                                    <td>{{$item['district_name']}}</td>
+                                                    <td>{{$item->district_id}}</td>
+                                                    <td>{{$item->district_name}}</td>
                                                     <td>{{$item->city->city_name}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
