@@ -1,10 +1,20 @@
 @extends('layouts.admin')
+
+@section('content-header')
+<div class="row">
+    <div class="col-sm-6">
+      <h5 class="m-0 text-dark">Trung tâm ngoại ngữ</h5>
+    </div><!-- /.col -->
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">admin</a></li>
+      <li class="breadcrumb-item"><a href="{{route('center.index')}}">center</a></li>
+      </ol>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+@endsection
+
 @section('content')
-<style>
-    body{
-        font-size: 12px!important;
-    }
-</style>
 <div id="page-wrapper">
     @if($message = Session::get('success'))
         <div class="alert alert-success" role="alert" id='showMessage'
@@ -17,12 +27,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Trung tâm ngoại ngữ</h3>
-                            <br>
                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                 <a style="width:80px" href="{{route('center.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
                             {{-- @endif --}}
-                            <br>
                             <br>
                             <br>
                             <div class="table-responsive">

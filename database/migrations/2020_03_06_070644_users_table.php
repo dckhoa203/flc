@@ -20,7 +20,7 @@ class UsersTable extends Migration
                 $table->string('password')->comment('mật khẩu');
                 $table->string('name')->comment('họ và tên');
                 $table->string('tel')->nullable()->comment('số điện thoại');
-                $table->string('sex')->nullable()->comment('giới tính');
+                $table->boolean('sex')->nullable()->comment('giới tính');
                 $table->date('dob')->nullable()->comment('ngày sinh');
                 $table->integer('level')->comment('phân quyền cấp từ 0...3');
                 $table->integer('district_id')->unsigned()->nullable()->comment('id quận huyện');

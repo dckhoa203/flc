@@ -3,12 +3,13 @@
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
-      <h5 class="m-0 text-dark">Quận/ Huyện</h5>
+      <h5 class="m-0 text-dark">Duyệt bài đăng</h5>
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">admin</a></li>
-      <li class="breadcrumb-item"><a href="{{route('district.index')}}">district</a></li>
+      <li class="breadcrumb-item"><a href="{{route('post.index')}}">post</a></li>
+      <li class="breadcrumb-item active">approved</li>
       </ol>
     </div><!-- /.col -->
   </div><!-- /.row -->
@@ -27,18 +28,16 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {{-- <div class="white-box"> --}}
-                                {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                    <a style="width:80px" href="{{route('district.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
-                                {{-- @endif --}}
-                                <br>
-                                <br>
                                 <div class="table-responsive">
                                     <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tên Quận/Huyện</th>
-                                                <th>Tên tỉnh/thành phố</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Nội dung</th>
+                                                <th>Tác giả</th>
+                                                <th>Thể loại</th>
+                                                <th>Email</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -49,15 +48,18 @@
                                         <tbody  style="font-size: 12px">
                                             @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{$item->district_id}}</td>
-                                                    <td>{{$item->district_name}}</td>
-                                                    <td>{{$item->city->city_name}}</td>
+                                                    <td>{{$item->post_id}}</td>
+                                                    <td>{{$item->title}}</td>
+                                                    <td>{{$item->content}}</td>
+                                                    <td>{{$item->user->name}}</td>
+                                                    <td>{{$item->category->category_name}}</td>
+                                                    <td>{{$item->user->email}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
-                                                            <form action="{{ route('district.destroy', $item->district_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Master\DistrictController@edit',$item->district_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                            <form action="{{ route('post.approved', $item->post_id) }}" method="post" class="delete_form">
+                                                                {{-- <a  href="{{ action('Master\PostController@approved',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Duyệt">&nbsp;&nbsp;&nbsp;<i class="fas fa-check"></i></a> --}}
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
+                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Duyệt"><i class="fas fa-check"></i></button>
                                                             </form>
                                                         </td>
                                                     {{-- @else --}}
@@ -97,7 +99,7 @@
         // Họp thoại cảnh báo xóa
         $(document).ready(function () {
             $('.delete_form').on('submit',function(){
-                if(confirm('Bạn có muốn xóa Khoa/viện này không??'))
+                if(confirm('Bạn có muốn duyệt bài viết này không?'))
                 {
                     return true;
                 }

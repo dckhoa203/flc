@@ -41,7 +41,7 @@ class CenterController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('center')->with('success', 'Thêm thành công');
+        return redirect('admin/center')->with('success', 'Thêm thành công');
     }
 
     public function edit($center_id)
@@ -57,7 +57,7 @@ class CenterController extends Controller
         $center->center_name = $request->get('center_name');
         $center->save();
         
-        return redirect('center')->with('success', 'Cập nhật thành công');
+        return redirect('admin/center')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($center_id)
@@ -66,5 +66,17 @@ class CenterController extends Controller
         $data->delete();
         // dd($data);
         return back()->with('success', 'Xóa thành công!');
+    }
+
+    public function get_center (Request $request)
+    {
+        $config = [
+            'model' => new Center(),
+            'request' => $request,
+        ];
+        $this->config($config);
+        $data = $this->model->web_index($this->request);
+
+        return $data;
     }
 }

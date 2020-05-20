@@ -18,14 +18,13 @@ class PostController extends Controller
     // Hàm đỗ dữ liệu của một Khoa ra trang index
     public function index (Request $request)
     {
-        $config = [
-            'model' => new Post(),
-            'request' => $request,
-        ];
-        $this->config($config);
-        $data = $this->model->web_index($this->request);
-       
-        return view('pages.admins.post.index', ['data' => $data]);
+        $data = Post::where('status', 1)
+                ->orderBy('post_id', 'DESC')
+                ->get();
+
+        $category = Category::all();
+        
+        return view('pages.admins.post.index', compact('data', 'category'));
     }
 
     public function create (Request $request)
@@ -44,7 +43,7 @@ class PostController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return back()->with('success', 'Thêm thành công');
+        return redirect('admin/post')->with('success', 'Thêm thành công');
     }
 
     public function edit($post_id)
@@ -64,7 +63,7 @@ class PostController extends Controller
         $post->categogy_id = $request->get('categogy_id');
         $post->save();
         
-        return back()->with('success', 'Cập nhật thành công');
+        return redirect('admin/post')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($post_id)
@@ -74,4 +73,46 @@ class PostController extends Controller
         
         return back()->with('success', 'Xóa thành công!');
     }
+
+    public function get_approved() 
+    {
+        $data = Post::where('status', 0)
+                ->orderBy('post_id', 'DESC')
+                ->get();
+
+        return view('pages.admins.post.approved', ['data' => $data]);
+    }
+
+    public function approved($post_id) 
+    {
+        $data = Post::find($post_id);
+        $data->status = 1;
+        $data->save();
+                
+        return back()->with('success', 'Đã duyệt');
+    }
+
+    public function get_data(Request $request)
+    {        
+        
+        $id = $request->id;
+        if ($id == -1 ){
+            $data = Post::where('status', 1)
+                    ->orderBy('post_id', 'DESC')->get();
+        } else {
+            $data = Post::where([['category_id', $id],['status', 1]])
+                    ->orderBy('post_id', 'DESC')
+                    ->get();
+        }
+
+        return view('pages.admins.post.getdata',['data' => $data ? $data : '']);
+    }
+
+    public function show($post_id)
+    {
+        $data = Post::findOrFail($post_id)->get();
+
+        return view('pages.admins.post.show', ['data' => $data]);
+    }
+
 }

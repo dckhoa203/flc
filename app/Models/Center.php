@@ -16,6 +16,7 @@ class Center extends BaseModel
     protected $fillable = [
         'center_id',
         'center_name',
+        'tel',
         'website',
         'created_at',
         'updated_at',

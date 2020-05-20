@@ -1,10 +1,21 @@
 @extends('layouts.admin')
+
+@section('content-header')
+<div class="row">
+    <div class="col-sm-6">
+      <h5 class="m-0 text-dark">Bài đăng</h5>
+    </div><!-- /.col -->
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">admin</a></li>
+      <li class="breadcrumb-item"><a href="{{route('post.index')}}">post</a></li>
+      </ol>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+@endsection
+
 @section('content')
-<style>
-    body{
-        font-size: 12px!important;
-    }
-    </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <div id="page-wrapper">
         @if($message = Session::get('success'))
             <div class="alert alert-success" role="alert" id='showMessage'
@@ -16,16 +27,18 @@
             <div class="white-box">
                     <div class="row">
                         <div class="col-sm-12">
-                            {{-- <div class="white-box"> --}}
-                                <h3 class="box-title">Bài Đăng</h3>
+                                <div>
+                                    <div class="d-fle">
+                                        <select class="form-control" id="select_category">
+                                            <option value="-1">All</option>
+                                            @foreach($category as $item)
+                                                <option value="{{$item->category_id}}">{{$item->category_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <br>
-                                {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                    <a style="width:80px" href="{{route('post.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
-                                {{-- @endif --}}
-                                <br>
-                                <br>
-                                <br>
-                                <div class="table-responsive">
+                                <div class="table-responsive showContent">
                                     <table style="font-size:12px" id="myTable" class="table table-striped dataTable no-footer">
                                         <thead>
                                             <tr>
@@ -54,7 +67,7 @@
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
                                                             <form action="{{ route('post.destroy', $item->post_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Master\PostController@edit',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                                <a  href="{{ action('Master\PostController@show',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem bài viết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                             </form>
@@ -80,34 +93,39 @@
     </div>
     {{-- end div page-wrapper --}}
 @endsection
-    
-@section('script')    
-    <script>
-        // Sắp xếp
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        });
-        // an thong bao
-        $(document).ready(function(){
-            setTimeout(function(){
-                $('#showMessage').hide()            
-            },1000)
-        });
-        // Họp thoại cảnh báo xóa
-        $(document).ready(function () {
-            $('.delete_form').on('submit',function(){
-                if(confirm('Bạn có muốn xóa bài viết này không?'))
-                {
-                    return true;
+
+
+@section('script')
+<script>
+    $(document).ready(function() {
+		$('#select_category').on('change',function(){
+            const category_id = $('#select_category')[0].value;
+            // alert(category_id);
+			$.ajax({
+				headers: {
+          			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          		},
+				type: 'post',
+				url: "{{route('post.getdata')}}",
+                data:{id: category_id},
+				success: function(data){
+                    $('.showContent').html(data)	
+				},
+				error: function(data) {
+			 	    alert(JSON.stringify(data));
+                    // alert('error');
                 }
-                else
-                {
-                    return false;
-                }
-            });
-        });
-    </script>
+			})
+		})
+	})
+
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
+</script>
 @endsection
+
+
 
 @section('script')
 <script>

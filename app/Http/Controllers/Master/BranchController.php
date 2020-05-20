@@ -26,7 +26,6 @@ class BranchController extends Controller
         ];
         $this->config($config);
         $data = $this->model->web_index($this->request);
-        dd(View::share);
 
         return view('pages.admins.branch.index', ['data' => $data]);
     }
@@ -49,17 +48,19 @@ class BranchController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('branch')->with('success', 'Thêm thành công');
+        return redirect('admin/branch')->with('success', 'Thêm thành công');
     }
 
     public function edit($branch_id, Request $request)
     {
         
         $branch = Branch::findOrFail($branch_id);
-        $district = District::all();
+        $city_id = $branch->district->city->city_id;
+        $city = City::all();
+        $district = District::where('city_id', $city_id)->get();
         $center = Center::all();
-        dd($request->path());
-        return view('pages.admins.branch.edit', compact('branch', 'district', 'center'));
+        
+        return view('pages.admins.branch.edit', compact('branch', 'district', 'center', 'city'));
     }
 
     public function update(Request $request, $branch_id)
@@ -68,9 +69,9 @@ class BranchController extends Controller
         $branch->address = $request->get('address');
         $branch->district_id = $request->get('district_id');
         $branch->center_id = $request->get('center_id');
-        $dbranch->save();
+        $branch->save();
         
-        return redirect('branch')->with('success', 'Cập nhật thành công');
+        return redirect('admin/branch')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($district_id)

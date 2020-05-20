@@ -41,7 +41,7 @@ class CategoryController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('category')->with('success', 'Thêm thành công');
+        return redirect('admin/category')->with('success', 'Thêm thành công');
     }
 
     public function edit($category_id)
@@ -57,7 +57,7 @@ class CategoryController extends Controller
         $category->category_name = $request->get('category_name');
         $category->save();
         
-        return redirect('category')->with('success', 'Cập nhật thành công');
+        return redirect('admin/category')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($category_id)
@@ -66,5 +66,17 @@ class CategoryController extends Controller
         $data->delete();
         // dd($data);
         return back()->with('success', 'Xóa thành công!');
+    }
+
+    public function get_category (Request $request)
+    {
+        $config = [
+            'model' => new Category(),
+            'request' => $request,
+        ];
+        $this->config($config);
+        $data = $this->model->web_index($this->request);
+
+        return $data;
     }
 }

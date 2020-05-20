@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UserController extends Controller
+class AccountController extends Controller
 {
     // Hàm khởi tạo.
     public function __construct()
@@ -24,12 +24,12 @@ class UserController extends Controller
         $this->config($config);
         $data = $this->model->web_index($this->request);
 
-        return view('pages.admins.user.index', ['data' => $data]);
+        return view('pages.admins.account.index', ['data' => $data]);
     }
 
     public function create (Request $request)
     {
-        return view('pages.admins.user.create');
+        return view('pages.admins.account.create');
     }
 
     public function create_submit(Request $request)
@@ -41,14 +41,14 @@ class UserController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('user')->with('success', 'Thêm thành công');
+        return redirect('admin/account')->with('success', 'Thêm thành công');
     }
 
     public function edit($user_id)
     {
-        $user = User::findOrFail($user_id);
+        $account = User::findOrFail($user_id);
 
-        return view('pages.admins.user.edit', ['user' => $user]);
+        return view('pages.admins.account.edit', compact('account'));
     }
 
     public function update(Request $request, $user_id)
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user->level = $request->get('level');
         $user->save();
         
-        return redirect('user')->with('success', 'Cập nhật thành công');
+        return redirect('admin/account')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($user_id)
@@ -66,5 +66,19 @@ class UserController extends Controller
         $data->delete();
         
         return back()->with('success', 'Xóa thành công!');
+    }
+
+    public function collaborator()
+    {
+        $data = User::where('level', 1)->get();
+
+        return view('pages.admins.account.index', compact('data'));
+    }
+
+    public function member()
+    {
+        $data = User::where('level', 2)->get();
+
+        return view('pages.admins.account.index', compact('data'));
     }
 }

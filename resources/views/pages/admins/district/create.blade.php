@@ -1,5 +1,20 @@
 @extends('layouts.admin')
 
+@section('content-header')
+<div class="row mb-2">
+    <div class="col-sm-6">
+      <h1 class="m-0 text-dark">Thêm quận / huyện</h1>
+    </div><!-- /.col -->
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">admin</a></li>
+        <li class="breadcrumb-item"><a href="{{route('district.index')}}">district</a></li>
+        <li class="breadcrumb-item active">create</li>
+      </ol>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-sm-6 m-auto">

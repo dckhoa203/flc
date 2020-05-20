@@ -21,7 +21,7 @@ class User extends BaseModel
         'tel',
         'sex',
         'dob',
-        'level',
+        'level', //0: admin, 1: collaborator, 2: member
         'district_id',
         'created_at',
         'updated_at',

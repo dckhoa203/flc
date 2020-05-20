@@ -25,7 +25,8 @@ Route::get('/hello', function () {
 // });
 
 Route::prefix('admin')->group(function() {
-        // CITY
+    Route::get('/', 'Master\PostController@get_approved')->name('admin.index');
+    // CITY
     Route::prefix('city')->group(function () {
         Route::get('/', 'Master\CityController@index')->name('city.index');
         Route::get('/create', 'Master\CityController@create')->name('city.create');
@@ -33,6 +34,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/edit/{city_id}', 'Master\CityController@edit')->name('city.edit');
         Route::post('/update/{city_id}', 'Master\CityController@update')->name('city.update');
         Route::post('/destroy/{city_id}', "Master\CityController@destroy")->name('city.destroy');
+        Route::get('/get_city', 'Master\CityController@get_city')->name('city.get_city');
     });
 
     // DISTRICT
@@ -43,16 +45,20 @@ Route::prefix('admin')->group(function() {
         Route::get('/edit/{district_id}', 'Master\DistrictController@edit')->name('district.edit');
         Route::post('/update/{district_id}', 'Master\DistrictController@update')->name('district.update');
         Route::post('/destroy/{district_id}', "Master\DistrictController@destroy")->name('district.destroy');
+        Route::get('/get_district', 'Master\DistrictController@get_district')->name('district.get_district');
+        Route::post('/get_district_city', 'Master\DistrictController@get_district_city')->name('district.get_district_city');
     });
 
     // USER
-    Route::prefix('user')->group(function () {
-        Route::get('/', 'Master\UserController@index')->name('user.index');
-        Route::get('/create', 'Master\UserController@create')->name('user.create');
-        Route::post('/create_submit', 'Master\UserController@create_submit')->name('user.create_submit');
-        Route::get('/edit/{user_id}', 'Master\UserController@edit')->name('user.edit');
-        Route::post('/update/{user_id}', 'Master\UserController@update')->name('user.update');
-        Route::post('/destroy/{user_id}', "Master\UserController@destroy")->name('user.destroy');
+    Route::prefix('account')->group(function () {
+        Route::get('/', 'Master\AccountController@index')->name('account.index');
+        Route::get('/create', 'Master\AccountController@create')->name('account.create');
+        Route::post('/create_submit', 'Master\AccountController@create_submit')->name('account.create_submit');
+        Route::get('/edit/{user_id}', 'Master\AccountController@edit')->name('account.edit');
+        Route::post('/update/{user_id}', 'Master\AccountController@update')->name('account.update');
+        Route::post('/destroy/{user_id}', "Master\AccountController@destroy")->name('account.destroy');
+        Route::get('/collaborator', "Master\AccountController@collaborator")->name('account.collaborator');
+        Route::get('/member', "Master\AccountController@member")->name('account.member');
     });
 
     // CENTER
@@ -63,6 +69,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/edit/{center_id}', 'Master\CenterController@edit')->name('center.edit');
         Route::post('/update/{center_id}', 'Master\CenterController@update')->name('center.update');
         Route::post('/destroy/{center_id}', 'Master\CenterController@destroy')->name('center.destroy');
+        Route::get('/get_center', 'Master\CenterController@get_center')->name('center.get_center');
     });
 
     // POST
@@ -73,6 +80,10 @@ Route::prefix('admin')->group(function() {
         Route::get('/edit/{post_id}', 'Master\PostController@edit')->name('post.edit');
         Route::post('/update/{post_id}', 'Master\PostController@update')->name('post.update');
         Route::post('/destroy/{post_id}', "Master\PostController@destroy")->name('post.destroy');
+        Route::get('/get_approved', 'Master\PostController@get_approved')->name('post.get_approved');
+        Route::post('/approved/{post_id}', 'Master\PostController@approved')->name('post.approved');
+        Route::post('/getdata', 'Master\PostController@get_data')->name('post.getdata');
+        Route::get('/show/{post_id}', 'Master\PostController@show')->name('post.show');
     });
 
     // BRANCH
@@ -93,5 +104,17 @@ Route::prefix('admin')->group(function() {
         Route::get('/edit/{category_id}', 'Master\CategoryController@edit')->name('category.edit');
         Route::post('/update/{category_id}', 'Master\CategoryController@update')->name('category.update');
         Route::post('/destroy/{category_id}', "Master\CategoryController@destroy")->name('category.destroy');
+        Route::get('/get_category', 'Master\CategoryController@get_category')->name('category.get_category');
+    });
+
+    // COMMENT
+    Route::prefix('comment')->group(function () {
+        Route::get('/', 'Master\CommentController@index')->name('comment.index');
+        Route::get('/create', 'Master\CommentController@create')->name('comment.create');
+        Route::post('/create_submit', 'Master\CommentController@create_submit')->name('comment.create_submit');
+        Route::get('/edit/{comment_id}', 'Master\CommentController@edit')->name('comment.edit');
+        Route::post('/update/{comment_id}', 'Master\CommentController@update')->name('comment.update');
+        Route::post('/destroy/{comment_id}', "Master\CommentController@destroy")->name('comment.destroy');
+        Route::post('/getdata', "Master\CommentController@get_data")->name('comment.getdata');
     });
 });

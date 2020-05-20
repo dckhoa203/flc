@@ -1,10 +1,20 @@
 @extends('layouts.admin')
+
+@section('content-header')
+<div class="row">
+    <div class="col-sm-6">
+      <h5 class="m-0 text-dark">Tài khoản</h5>
+    </div><!-- /.col -->
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">admin</a></li>
+      <li class="breadcrumb-item"><a href="{{route('account.index')}}">post</a></li>
+      </ol>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+@endsection
+
 @section('content')
-<style>
-    body{
-        font-size: 12px!important;
-    }
-</style>
 <div id="page-wrapper">
         @if($message = Session::get('success'))
             <div class="alert alert-success" role="alert" id='showMessage'
@@ -17,12 +27,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Người dùng</h3>
-                            <br>
                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                <a style="width:80px" href="{{route('user.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
+                                <a style="width:80px" href="{{route('account.create')}}" class="btn btn-success waves-effect waves-light m-r-10">Thêm</a>
                             {{-- @endif --}}
-                            <br>
                             <br>
                             <br>
                             <div class="table-responsive">
@@ -35,8 +42,6 @@
                                             <th>SĐT</th>
                                             <th>Giới tính</th>
                                             <th>Ngày sinh</th>
-                                            <th>Địa Chỉ</th>
-                                            <th>Loại tài khoản</th>
                                             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                 <th>Chức năng</th>
                                             {{-- @else --}}
@@ -51,14 +56,12 @@
                                                 <td>{{$item->email}}</td>
                                                 <td>{{$item->name}}</td>
                                                 <td>{{$item->tel}}</td>
-                                                <td>{{$item->sex}}</td>
+                                                <td>@if($item->sex == 1) Nam @else Nữ @endif</td>
                                                 <td>{{$item->dob}}</td>
-                                                <td>{{$item->district_id}}</td>
-                                                <td>{{$item->level}}</td>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <td>
-                                                        <form action="{{ route('user.destroy', $item->user_id) }}" method="post" class="delete_form">
-                                                            <a  href="{{ action('Master\UserController@edit',$item->user_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                        <form action="{{ route('account.destroy', $item->user_id) }}" method="post" class="delete_form">
+                                                            <a  href="{{ action('Master\AccountController@edit',$item->user_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
                                                             @csrf
                                                             <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                         </form>

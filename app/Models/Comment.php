@@ -38,4 +38,9 @@ class Comment extends BaseModel
         ];
         return parent::base_update($this->request);
     }
+
+    public function user() 
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }

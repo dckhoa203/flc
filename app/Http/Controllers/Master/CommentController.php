@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -17,14 +18,14 @@ class CommentController extends Controller
     // Hàm đỗ dữ liệu của một Khoa ra trang index
     public function index (Request $request)
     {
-        $config = [
-            'model' => new Comment(),
-            'request' => $request,
-        ];
-        $this->config($config);
-        $data = $this->model->web_index($this->request);
+        
+        $data = Comment::orderBy('comment_id', 'DESC')->get();
 
-        return view('pages.admins.comment.index', ['data' => $data]);
+        $post = Post::where('status', 1)
+                ->orderBy('post_id', 'DESC')
+                ->get();
+
+        return view('pages.admins.comment.index', compact('data', 'post'));
     }
 
     public function create (Request $request)
@@ -41,7 +42,7 @@ class CommentController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('comment')->with('success', 'Thêm thành công');
+        return redirect('admin/comment')->with('success', 'Thêm thành công');
     }
 
     public function edit($comment_id)
@@ -60,7 +61,7 @@ class CommentController extends Controller
         $comment->reply_id = $request->get('reply_id');
         $comment->save();
         
-        return redirect('categogy')->with('success', 'Cập nhật thành công');
+        return redirect('admin/categogy')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($comment_id)
@@ -69,5 +70,19 @@ class CommentController extends Controller
         $data->delete();
         // dd($data);
         return back()->with('success', 'Xóa thành công!');
+    }
+
+    public function get_data(Request $request){        
+        
+        $id = $request->id;
+        if ($id == -1 ){
+            $data = Comment::orderBy('comment_id', 'DESC')->get();
+        } else {
+            $data = Comment::where('post_id', $id)
+                    ->orderBy('comment_id', 'DESC')
+                    ->get();
+        }
+
+        return view('pages.admins.comment.getdata',['data' => $data ? $data : '']);
     }
 }

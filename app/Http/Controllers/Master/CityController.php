@@ -41,7 +41,7 @@ class CityController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('city')->with('success', 'Thêm thành công');
+        return redirect('admin/city')->with('success', 'Thêm thành công');
     }
 
     public function edit($city_id)
@@ -57,7 +57,7 @@ class CityController extends Controller
         $city->city_name = $request->get('city_name');
         $city->save();
         
-        return redirect('city')->with('success', 'Cập nhật thành công');
+        return redirect('admin/city')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($city_id)
@@ -66,5 +66,17 @@ class CityController extends Controller
         $data->delete();
         // dd($data);
         return back()->with('success', 'Xóa thành công!');
+    }
+
+    public function get_city (Request $request)
+    {
+        $config = [
+            'model' => new City(),
+            'request' => $request,
+        ];
+        $this->config($config);
+        $data = $this->model->web_index($this->request);
+
+        return $data;
     }
 }

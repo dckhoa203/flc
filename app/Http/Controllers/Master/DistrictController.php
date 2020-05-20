@@ -43,7 +43,7 @@ class DistrictController extends Controller
         $this->config($config);
         $data = $this->model->web_insert($this->request);
         
-        return redirect('district')->with('success', 'Thêm thành công');
+        return redirect('admin/district')->with('success', 'Thêm thành công');
     }
 
     public function edit($district_id)
@@ -61,7 +61,7 @@ class DistrictController extends Controller
         $district->city_id = $request->get('city_id');
         $district->save();
         
-        return redirect('district')->with('success', 'Cập nhật thành công');
+        return redirect('admin/district')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($district_id)
@@ -70,5 +70,27 @@ class DistrictController extends Controller
         $data->delete();
         
         return back()->with('success', 'Xóa thành công!');
+    }
+    
+    public function get_district (Request $request)
+    {
+        $config = [
+            'model' => new District(),
+            'request' => $request,
+        ];
+        $this->config($config);
+        $data = $this->model->web_index($this->request);
+       
+        return $data;   
+    }
+
+    // Lấy district theo city
+    public function get_district_city (Request $request)
+    {
+        $city_id = $request->id;
+
+        $data = District::where('city_id', $city_id)->get();
+       
+        return $data;
     }
 }
