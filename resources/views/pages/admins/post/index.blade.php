@@ -1,5 +1,12 @@
 @extends('layouts.admin')
-
+<style>
+    .post-summary {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+</style>
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
@@ -60,7 +67,7 @@
                                                 <tr>
                                                     <td>{{$item->post_id}}</td>
                                                     <td>{{$item->title}}</td>
-                                                    <td>{{$item->content}}</td>
+                                                    <td class="post-summary">{{$item->content}}</td>
                                                     <td>{{$item->user->name}}</td>
                                                     <td>{{$item->category->category_name}}</td>
                                                     <td>{{$item->user->email}}</td>

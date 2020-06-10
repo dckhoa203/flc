@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('layouts/widgets/head')
+@include('layouts/widgets/admin/head')
 <body>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       <!-- Navbar -->
-      @include('layouts/widgets/header')
+      @include('layouts/widgets/admin/header')
 
       <!-- Main Sidebar Container -->
-      @include('layouts/widgets/menu_left')
+      @include('layouts/widgets/admin/menu_left')
 
-      @include('layouts/widgets/content')
+      @include('layouts/widgets/admin/content')
       <!-- /.content-wrapper -->
-      @include('layouts/widgets/footer')
+      @include('layouts/widgets/admin/footer')
     
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
@@ -21,7 +21,7 @@
       <!-- /.control-sidebar -->
     </div>
 
-    @include('layouts/widgets/js')
-    @include('layouts/widgets/script')
+    @include('layouts/widgets/admin/js')
+    @include('layouts/widgets/admin/script')
 </body>
 </html>

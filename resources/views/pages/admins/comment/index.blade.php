@@ -64,7 +64,7 @@
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
                                                             <form action="{{ route('comment.destroy', $item->comment_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Master\CommentController@edit',$item->comment_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                                <a  href="{{ action('Master\CommentController@show',$item->comment_id) }}" data-toggle="tooltip" data-placement="top" title="Xem bài viết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                             </form>

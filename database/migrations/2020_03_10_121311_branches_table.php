@@ -18,6 +18,7 @@ class BranchesTable extends Migration
                 $table->increments('branch_id')->comment('id');
                 $table->string('branch_name')->comment('tên chi nhánh');
                 $table->string('address')->comment('tiêu đề bài viết');
+                $table->string('image')->comment('ảnh trung tâm');
                 $table->integer('center_id')->unsigned()->comment('id user');
                 $table->integer('district_id')->unsigned()->comment('id quận huyện');
 

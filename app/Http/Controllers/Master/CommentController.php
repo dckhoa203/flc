@@ -85,4 +85,11 @@ class CommentController extends Controller
 
         return view('pages.admins.comment.getdata',['data' => $data ? $data : '']);
     }
+
+    public function show($comment_id)
+    {
+        $data = Comment::findOrFail($comment_id)->get();
+
+        return view('pages.admins.comment.show', ['data' => $data]);
+    }
 }

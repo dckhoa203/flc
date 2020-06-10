@@ -83,13 +83,24 @@ class PostController extends Controller
         return view('pages.admins.post.approved', ['data' => $data]);
     }
 
-    public function approved($post_id) 
+    public function approved(Request $request)
     {
+        $post_id = $request->get('id');
         $data = Post::find($post_id);
         $data->status = 1;
         $data->save();
                 
-        return back()->with('success', 'Đã duyệt');
+        return response()->json(["result" => "success"]);
+    }
+
+    public function removed(Request $request)
+    {
+        $post_id = $request->get('id');;
+
+        $data = Post::findOrFail($post_id);
+        $data->delete();
+                
+        return response()->json(["result" => "success"]);
     }
 
     public function get_data(Request $request)
@@ -110,9 +121,9 @@ class PostController extends Controller
 
     public function show($post_id)
     {
-        $data = Post::findOrFail($post_id)->get();
+        $post = Post::findOrFail($post_id)->first();
 
-        return view('pages.admins.post.show', ['data' => $data]);
+        return view('pages.admins.post.show', ['post' => $post]);
     }
 
 }

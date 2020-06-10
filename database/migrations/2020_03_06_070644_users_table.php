@@ -16,13 +16,14 @@ class UsersTable extends Migration
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->increments('user_id')->comment('id');
-                $table->string('email', 191)->comment('tên đăng nhập - email');
+                $table->string('email')->comment('tên đăng nhập - email');
                 $table->string('password')->comment('mật khẩu');
                 $table->string('name')->comment('họ và tên');
                 $table->string('tel')->nullable()->comment('số điện thoại');
                 $table->boolean('sex')->nullable()->comment('giới tính');
                 $table->date('dob')->nullable()->comment('ngày sinh');
-                $table->integer('level')->comment('phân quyền cấp từ 0...3');
+                $table->string('avatar')->nullable()->comment('ảnh đại diện');
+                $table->integer('level')->default(2)->comment('phân quyền cấp từ 0-2, mặc định là 2(thành viên)');
                 $table->integer('district_id')->unsigned()->nullable()->comment('id quận huyện');
 
                 // log time

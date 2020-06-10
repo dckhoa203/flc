@@ -1,5 +1,12 @@
 @extends('layouts.admin')
-
+<style>
+.post-summary {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+</style>
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
@@ -16,6 +23,7 @@
 @endsection
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <div id="page-wrapper">
         @if($message = Session::get('success'))
             <div class="alert alert-success" role="alert" id='showMessage'
@@ -47,20 +55,17 @@
                                         </thead>
                                         <tbody  style="font-size: 12px">
                                             @foreach ($data as $item)
-                                                <tr>
+                                                <tr id="{{$item->post_id}}">
                                                     <td>{{$item->post_id}}</td>
                                                     <td>{{$item->title}}</td>
-                                                    <td>{{$item->content}}</td>
+                                                    <td class="post-summary">{{$item->content}}</td>
                                                     <td>{{$item->user->name}}</td>
                                                     <td>{{$item->category->category_name}}</td>
                                                     <td>{{$item->user->email}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
-                                                            <form action="{{ route('post.approved', $item->post_id) }}" method="post" class="delete_form">
-                                                                {{-- <a  href="{{ action('Master\PostController@approved',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Duyệt">&nbsp;&nbsp;&nbsp;<i class="fas fa-check"></i></a> --}}
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Duyệt"><i class="fas fa-check"></i></button>
-                                                            </form>
+                                                            <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn approved" post-id="{{$item->post_id}}" data-toggle="tooltip" data-placement="top" title="Duyệt"><i class="fas fa-check"></i></button>
+                                                            <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn delete removed" post-id="{{$item->post_id}}" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                         </td>
                                                     {{-- @else --}}
                                                         {{-- <td></td> --}}
@@ -96,17 +101,65 @@
                 $('#showMessage').hide()            
             },1000)
         });
-        // Họp thoại cảnh báo xóa
+        // Duyệt bài đăng
         $(document).ready(function () {
-            $('.delete_form').on('submit',function(){
-                if(confirm('Bạn có muốn duyệt bài viết này không?'))
-                {
-                    return true;
+            $('.approved').on('click',function(){
+                const confirmResult = confirm('Bạn có chắc muốn duyệt bài này không?');
+                if (!confirmResult) { // Neu khong dong y
+                    return;
                 }
-                else
-                {
-                    return false;
+                const post_id = $(this).attr('post-id');
+                // alert(post_id);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    url: "{{route('post.approved')}}",
+                    data:{id: post_id},
+                    dataType: "JSON",
+                    success: function(response){
+                        if (response.result === 'success') {
+                            alert('Duyệt bài thành công!');
+                            $(`#${post_id}`).fadeOut();
+                        }
+                    },
+                    error: function(data) {
+                        alert(JSON.stringify(data));
+                        // alert('error');
+                    }
+                })
+            });
+        });
+
+        // Loại bỏ bài đăng
+        $(document).ready(function () {
+            $('.removed').on('click',function(){
+                const confirmResult = confirm('Bạn có chắc muốn xóa bài này không?');
+                if (!confirmResult) { // Neu khong dong y
+                    return;
                 }
+                const post_id = $(this).attr('post-id');
+                // alert(post_id);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    url: "{{route('post.removed')}}",
+                    data:{id: post_id},
+                    dataType: "JSON",
+                    success: function(response){
+                        if (response.result === 'success') {
+                            alert('Xóa bài thành công!');
+                            $(`#${post_id}`).fadeOut();
+                        }
+                    },
+                    error: function(data) {
+                        alert(JSON.stringify(data));
+                        // alert('error');
+                    }
+                })
             });
         });
     </script>

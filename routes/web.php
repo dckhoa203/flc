@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/hello', function () {
-    echo "hello";
-});
+    return view('home');
+})->name('home');
 
-// Route::get('/city/index', function () {
-//     return view('pages.admins.city.index');
-// });
+Route::get('/login','LoginController@index')->name('login');
+// Route::post('/login','login@postLogin')->name('postLogin');
+route::post('/register','LoginController@register')->name('register');
+// route::post('/register','login@postRegister')->name('postRegister');
+// Route::get('/logout','login@logout')->name('logout');
 
+// ADMIN
 Route::prefix('admin')->group(function() {
     Route::get('/', 'Master\PostController@get_approved')->name('admin.index');
     // CITY
@@ -81,7 +81,8 @@ Route::prefix('admin')->group(function() {
         Route::post('/update/{post_id}', 'Master\PostController@update')->name('post.update');
         Route::post('/destroy/{post_id}', "Master\PostController@destroy")->name('post.destroy');
         Route::get('/get_approved', 'Master\PostController@get_approved')->name('post.get_approved');
-        Route::post('/approved/{post_id}', 'Master\PostController@approved')->name('post.approved');
+        Route::post('/approved', 'Master\PostController@approved')->name('post.approved');
+        Route::post('/removed', 'Master\PostController@removed')->name('post.removed');
         Route::post('/getdata', 'Master\PostController@get_data')->name('post.getdata');
         Route::get('/show/{post_id}', 'Master\PostController@show')->name('post.show');
     });
@@ -116,5 +117,11 @@ Route::prefix('admin')->group(function() {
         Route::post('/update/{comment_id}', 'Master\CommentController@update')->name('comment.update');
         Route::post('/destroy/{comment_id}', "Master\CommentController@destroy")->name('comment.destroy');
         Route::post('/getdata', "Master\CommentController@get_data")->name('comment.getdata');
+        Route::get('/show/{comment_id}', 'Master\CommentController@show')->name('comment.show');
     });
 });
+
+// MEMBER
+// Route::prefix('app')->group(function() {
+//     Route::get('/', 'Master\BranchController@index')->name('branch.index');
+// });
