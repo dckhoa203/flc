@@ -17,8 +17,8 @@ class CentersTable extends Migration
             Schema::create('centers', function (Blueprint $table) {
                 $table->increments('center_id')->comment('id');
                 $table->string('center_name')->comment('tên trung tâm');
-                $table->string('tel')->comment('số điện thoại');
-                $table->string('website')->comment('website');
+                $table->string('tel')->nullable()->comment('số điện thoại');
+                $table->string('website')->nullable()->comment('website');
 
                 // log time
                 $table->timestamp('created_at')

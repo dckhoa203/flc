@@ -32,16 +32,17 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w">
+				<form class="login100-form validate-form flex-sb flex-w" action="{{route('postlogin')}}" method="POST">
+					@csrf
 					<span class="login100-form-title p-b-32">
 						Đăng nhập
 					</span>
 
 					<span class="txt1 p-b-11">
-						Tên đăng nhập
+						Email
 					</span>
 					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
+						<input class="input100" type="text" name="email" >
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -72,9 +73,7 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Đăng nhập
-						</button>
+						<input type="submit" class="login100-form-btn" value="Đăng nhập">
 					</div>
 
 				</form>

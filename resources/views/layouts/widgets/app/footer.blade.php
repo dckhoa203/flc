@@ -12,10 +12,10 @@
       <div class="col-md-3 ml-auto">
         <h3>Liên kết</h3>
         <ul class="list-unstyled footer-links">
-          <li><a href="#">Trang chủ</a></li>
-          <li><a href="#">Khóa học</a></li>
-          <li><a href="#">Programs</a></li>
-          <li><a href="#">Trung tâm</a></li>
+          <li><a href="#home-section">Trang chủ</a></li>
+          <li><a href="#courses-section">Khóa học</a></li>
+          <li><a href="#teachers-section">Trung tâm</a></li>
+          <li><a href="#contact-section">Liên hệ</a></li>
         </ul>
       </div>
 

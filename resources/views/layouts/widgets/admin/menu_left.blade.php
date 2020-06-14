@@ -25,6 +25,15 @@
               </p>
             </a>
           </li>
+          {{-- Khóa học --}}
+          <li class="nav-item">
+            <a href="{{route('course.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Khóa học
+              </p>
+            </a>
+          </li>
           {{-- Thể loại --}}
           <li class="nav-item">
             <a href="{{route('category.index')}}" class="nav-link">
@@ -72,6 +81,12 @@
                 <a href="{{route('post.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Quản lý bài đăng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('post.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tạo bài đăng</p>
                 </a>
               </li>
               <li class="nav-item">

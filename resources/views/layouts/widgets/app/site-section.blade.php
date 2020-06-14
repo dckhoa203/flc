@@ -21,32 +21,32 @@
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-              <div><h3 class="m-0">22,931 Yearly Graduates</h3></div>
+              <div><h3 class="m-0">22,931 Sinh viên tốt nghiệp hàng đầu</h3></div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-              <div><h3 class="m-0">150 Universities Worldwide</h3></div>
+              <div><h3 class="m-0">150 Trung tâm tốt nhất</h3></div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-              <div><h3 class="m-0">Top Professionals in The World</h3></div>
+              <div><h3 class="m-0">Chuyên gia hàng đầu thế giới</h3></div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-              <div><h3 class="m-0">Expand Your Knowledge</h3></div>
+              <div><h3 class="m-0">Mở rộng kiến ​​thức của bạn</h3></div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-              <div><h3 class="m-0">Best Online Teaching Assistant Courses</h3></div>
+              <div><h3 class="m-0">Các khóa học trợ giảng trực tuyến tốt nhất</h3></div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap custom-icon-light">
               <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-              <div><h3 class="m-0">Best Teachers</h3></div>
+              <div><h3 class="m-0">Đội ngũ giảng viên tốt nhất</h3></div>
             </div>
 
           </div>

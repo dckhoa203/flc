@@ -17,6 +17,7 @@ class Post extends BaseModel
         'post_id',
         'title',
         'content',
+        'rental',
         'user_id',
         'category_id',
         'created_at',

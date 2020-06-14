@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PostsTable extends Migration
+class CoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class PostsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('posts')) {
-            Schema::create('posts', function (Blueprint $table) {
-                $table->increments('post_id')->comment('id');
-                $table->string('title')->comment('tiêu đề bài viết');
-                $table->text('content')->comment('nội dung bài viết');
-                $table->decimal('rental', 10, 3)->nullable()->comment('giá khóa học');
-                $table->integer('category_id')->nullable()->unsigned()->comment('id thể loại');
-                $table->integer('status')->default(0)->comment('trạng thái');
-                $table->integer('user_id')->nullable()->unsigned()->comment('id user');
+        if (!Schema::hasTable('courses')) {
+            Schema::create('courses', function (Blueprint $table) {
+                $table->increments('course_id')->comment('id');
+                $table->integer('post_id')->unsigned()->comment('id khóa đăng ký');
+                $table->integer('user_id')->unsigned()->comment('id học viên ');
 
                 // log time
                 $table->timestamp('created_at')
@@ -36,7 +32,7 @@ class PostsTable extends Migration
                     ->nullable()
                     ->comment('ngày xóa tạm');
                 });
-            DB::statement("ALTER TABLE `posts` comment 'Thông tin bài viết'");
+            DB::statement("ALTER TABLE `courses` comment 'Thông tin khóa học'");
         }
     }
 

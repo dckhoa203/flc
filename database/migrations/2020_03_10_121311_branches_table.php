@@ -17,10 +17,12 @@ class BranchesTable extends Migration
             Schema::create('branches', function (Blueprint $table) {
                 $table->increments('branch_id')->comment('id');
                 $table->string('branch_name')->comment('tên chi nhánh');
-                $table->string('address')->comment('tiêu đề bài viết');
-                $table->string('image')->comment('ảnh trung tâm');
-                $table->integer('center_id')->unsigned()->comment('id user');
-                $table->integer('district_id')->unsigned()->comment('id quận huyện');
+                $table->string('tel')->nullable()->comment('sdt');
+                $table->string('image')->nullable()->comment('ảnh trung tâm');
+                $table->string('address')->nullable()->comment('địa chỉ');
+                $table->integer('center_id')->unsigned()->comment('id center');
+                $table->integer('district_id')->nullable()->unsigned()->comment('id quận huyện');
+                $table->integer('user_id')->unsigned()->nullable()->comment('id user');
 
 
                 // log time

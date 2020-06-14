@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   @include('layouts.widgets.app.head')
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -25,13 +25,13 @@
     @include('layouts.widgets.app.courses')
 
     {{-- Programs --}}
-    @include('layouts.widgets.app.programs')
+    {{-- @include('layouts.widgets.app.programs') --}}
 
     {{-- Trung tâm --}}
     @include('layouts.widgets.app.teachers')
 
     {{-- Người sáng lập --}}
-    @include('layouts.widgets.app.founder')
+    {{-- @include('layouts.widgets.app.founder') --}}
 
     {{-- Tại sao chọn chúng tôi --}}
     @include('layouts.widgets.app.site-section')

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\Collaborator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -19,20 +18,29 @@ class PostController extends Controller
     // Hàm đỗ dữ liệu của một Khoa ra trang index
     public function index (Request $request)
     {
-        $data = Post::where('status', 1)
+        $user_id = 2;
+        $data = Post::where([['status', 1],['user_id', $user_id]])
                 ->orderBy('post_id', 'DESC')
                 ->get();
-
-        $category = Category::all();
         
-        return view('pages.admins.post.index', compact('data', 'category'));
+        return view('pages.collaborators.post.index', compact('data'));
+    }
+
+    public function not_approved (Request $request)
+    {
+        $user_id = 2;
+        $data = Post::where([['status', 0],['user_id', $user_id]])
+                ->orderBy('post_id', 'DESC')
+                ->get();
+        
+        return view('pages.collaborators.post.index', compact('data'));
     }
 
     public function create (Request $request)
     {
         $category = Category::all();
 
-        return view('pages.admins.post.create', compact('category'));
+        return view('pages.collaborators.post.create', compact('category'));
     }
 
     public function create_submit(Request $request)
@@ -122,9 +130,8 @@ class PostController extends Controller
 
     public function show($post_id)
     {
-        $data = Post::where('post_id', $post_id)->first();
-       
-        return view('pages.admins.post.show', compact('data'));
-    }
+        $post = Post::findOrFail($post_id)->first();
 
+        return view('pages.admins.post.show', ['post' => $post]);
+    }
 }
