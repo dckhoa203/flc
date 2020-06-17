@@ -49,4 +49,14 @@ class User extends BaseModel
     {
         return $this->hasMany(Post::class, 'user_id', 'user_id');
     }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class,'invoice_id','invoice_id');
+    }
+
+    public function branch()
+    {
+        return $this->hasOne(Branch::class, 'user_id', 'user_id');
+    }
 }

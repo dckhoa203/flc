@@ -19,8 +19,9 @@ class PostsTable extends Migration
                 $table->string('title')->comment('tiêu đề bài viết');
                 $table->text('content')->comment('nội dung bài viết');
                 $table->decimal('rental', 10, 3)->nullable()->comment('giá khóa học');
-                $table->integer('category_id')->nullable()->unsigned()->comment('id thể loại');
+                $table->date('start')->nullable()->comment('Ngày bắt đầu');
                 $table->integer('status')->default(0)->comment('trạng thái');
+                $table->integer('category_id')->nullable()->unsigned()->comment('id thể loại');
                 $table->integer('user_id')->nullable()->unsigned()->comment('id user');
 
                 // log time

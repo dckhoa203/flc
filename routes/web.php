@@ -122,10 +122,12 @@ Route::get('/logout','LoginController@logout')->name('logout');
             });
 
             // COURSE
-            Route::prefix('course')->group(function () {
-                Route::get('/', 'Master\CourseController@index')->name('course.index');
-                Route::post('/getdata', "Master\CourseController@get_data")->name('course.getdata');
-                Route::get('/show/{course_id}', 'Master\CourseController@show')->name('course.show');
+            Route::prefix('invoice')->group(function () {
+                Route::get('/', 'Master\InvoiceController@index')->name('invoice.index');
+                Route::post('/getdata', "Master\InvoiceController@get_data")->name('invoice.getdata');
+                Route::get('/list/{post_id}', 'Master\InvoiceController@list')->name('invoice.list');
+                Route::get('/report/{invoice_id}', 'Master\InvoiceController@report')->name('invoice.report');
+                Route::post('/getreportdata', 'Master\InvoiceController@getreportdata')->name('invoice.getreportdata');
             });
         });
     // });

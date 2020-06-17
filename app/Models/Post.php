@@ -18,6 +18,7 @@ class Post extends BaseModel
         'title',
         'content',
         'rental',
+        'start',
         'user_id',
         'category_id',
         'created_at',
@@ -48,5 +49,10 @@ class Post extends BaseModel
     public function category() 
     {
         return $this->belongsTo(Category::class, 'category_id', 'category_id');
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class,'invoice_id','invoice_id');
     }
 }

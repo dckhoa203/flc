@@ -38,7 +38,7 @@ class Center extends BaseModel
         return parent::base_update($this->request);
     }
 
-    public function center()
+    public function branch()
     {
         return $this->hasMany(Branch::class, 'center_id', 'center_id');
     }

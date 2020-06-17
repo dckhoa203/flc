@@ -27,10 +27,10 @@
           </li>
           {{-- Khóa học --}}
           <li class="nav-item">
-            <a href="{{route('course.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-user-graduate"></i>
+            <a href="{{route('invoice.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
-                Khóa học
+                Hóa đơn
               </p>
             </a>
           </li>

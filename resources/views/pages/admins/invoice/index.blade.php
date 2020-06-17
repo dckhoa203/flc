@@ -10,12 +10,12 @@
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
-      <h5 class="m-0 text-dark">Danh sách khóa học</h5>
+      <h5 class="m-0 text-dark">Danh sách lớp</h5>
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">admin</a></li>
-      <li class="breadcrumb-item"><a href="#">course</a></li>
+      <li class="breadcrumb-item"><a href="{{route('invoice.index')}}">invoice</a></li>
       </ol>
     </div><!-- /.col -->
   </div><!-- /.row -->
@@ -36,10 +36,11 @@
                         <div class="col-sm-12">
                                 <div>
                                     <div class="d-fle">
-                                        <select class="form-control" id="select_course">
+                                        <select class="form-control" id="select_category">
                                             <option value="-1">All</option>
-                                            <option value="1">Đăng ký thành công</option>
-                                            <option value="0">Chờ xử lý</option>
+                                            @foreach($center as $item)
+                                                <option value="{{$item->center_id}}">{{$item->center_name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -49,9 +50,10 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>ID học viên</th>
-                                                <th>ID Lớp học</th>
-                                                <th>Trạng thái</th>
+                                                <th>Tên lớp</th>
+                                                <th>Ngày khai giảng</th>
+                                                <th>Giá</th>
+                                                <th>Sỉ số</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -63,14 +65,14 @@
                                             @foreach ($data as $index => $item)
                                                 <tr>
                                                     <td>{{$index + 1}}</td>
-                                                    <td>{{$item->user_id}}</td>
-                                                    <td>{{$item->post_id}}</td>
-                                                    <td>@if($item->status == 1) Đăng ký thành công 
-                                                        @else chờ xử lý @endif
-                                                    </td>
+                                                    <td>{{$item->title}}</td>
+                                                    <td>{{$item->start}}</td>
+                                                    <td>{{$item->rental}}</td>
+                                                    {{-- <td>{{$item->user->branch->center->center_name}}</td> --}}
+                                                    <td>{{$count[$index]}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
-                                                            <a  href="{{ action('Master\CourseController@show',$item->course_id) }}" data-toggle="tooltip" data-placement="top" title="Xem chi tiết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
+                                                            <a  href="{{ action('Master\InvoiceController@list',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem danh sách lớp">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                                                         </td>
                                                     {{-- @else --}}
                                                         {{-- <td></td> --}}
@@ -98,16 +100,16 @@
 @section('script')
 <script>
     $(document).ready(function() {
-		$('#select_course').on('change',function(){
-            const id = $('#select_course')[0].value;
+		$('#select_category').on('change',function(){
+            const category_id = $('#select_category')[0].value;
             // alert(category_id);
 			$.ajax({
 				headers: {
           			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           		},
 				type: 'post',
-				url: "{{route('course.getdata')}}",
-                data:{id: id},
+				url: "{{route('invoice.getdata')}}",
+                data:{id: category_id},
 				success: function(data){
                     $('.showContent').html(data)	
 				},

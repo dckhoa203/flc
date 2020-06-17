@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CoursesTable extends Migration
+class InvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CoursesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('courses')) {
-            Schema::create('courses', function (Blueprint $table) {
-                $table->increments('course_id')->comment('id');
+        if (!Schema::hasTable('invoices')) {
+            Schema::create('invoices', function (Blueprint $table) {
+                $table->increments('invoice_id')->comment('id');
+                $table->boolean('status')->default(0)->comment('Trạng thái');
                 $table->integer('post_id')->unsigned()->comment('id khóa đăng ký');
                 $table->integer('user_id')->unsigned()->comment('id học viên ');
 
@@ -32,7 +33,7 @@ class CoursesTable extends Migration
                     ->nullable()
                     ->comment('ngày xóa tạm');
                 });
-            DB::statement("ALTER TABLE `courses` comment 'Thông tin khóa học'");
+            DB::statement("ALTER TABLE `invoices` comment 'Thông tin hóa đơn'");
         }
     }
 

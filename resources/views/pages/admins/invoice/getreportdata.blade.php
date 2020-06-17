@@ -2,9 +2,10 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>ID học viên</th>
-            <th>ID Lớp học</th>
-            <th>Trạng thái</th>
+            <th>Tên học viên</th>
+            <th>Email</th>
+            <th>SDT</th>
+            <th>trạng thái</th>
             {{-- @if (Auth::user()->hasRole('Admin')) --}}
                 <th>Chức năng</th>
             {{-- @else --}}
@@ -16,14 +17,14 @@
         @foreach ($data as $index => $item)
             <tr>
                 <td>{{$index + 1}}</td>
-                <td>{{$item->user_id}}</td>
-                <td>{{$item->post_id}}</td>
-                <td>@if($item->status == 1) Đăng ký thành công 
-                    @else chờ xử lý @endif
-                </td>
+                <td>{{$item->user[0]->name}}</td>
+                <td>{{$item->user[0]->email}}</td>
+                <td>{{$item->user[0]->tel}}</td>
+                <td>{{$item->status}}</td>
+                {{-- <td id="invoice-id" style="display:none;">{{$item->invoice_id}}</td> --}}
                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                     <td>
-                        <a  href="{{ action('Master\CourseController@show',$item->course_id) }}" data-toggle="tooltip" data-placement="top" title="Xem chi tiết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
+                        <a  href="{{ action('Master\InvoiceController@report',$item->invoice_id) }}" data-toggle="tooltip" data-placement="top" title="Xem chi tiết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                     </td>
                 {{-- @else --}}
                     {{-- <td></td> --}}

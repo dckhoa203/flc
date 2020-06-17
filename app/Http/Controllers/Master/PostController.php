@@ -123,7 +123,7 @@ class PostController extends Controller
     public function show($post_id)
     {
         $data = Post::where('post_id', $post_id)->first();
-       
+        
         return view('pages.admins.post.show', compact('data'));
     }
 

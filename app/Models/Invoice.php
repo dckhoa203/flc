@@ -5,16 +5,17 @@ namespace App\Models;
 use App\Models\Base\BaseModel;
 use Illuminate\Http\Request;
 
-class Course extends BaseModel
+class Invoice extends BaseModel
 {
-    protected $table = 'courses';
+    protected $table = 'invoices';
 
-    protected $primaryKey = 'course_id';
+    protected $primaryKey = 'invoice_id';
 
     protected $keyType = 'int';
 
     protected $fillable = [
-        'course_id',
+        'invoice_id',
+        'status',
         'post_id',
         'user_id',
         'created_at',
@@ -35,5 +36,15 @@ class Course extends BaseModel
             'post_id' => 1
         ];
         return parent::base_update($this->request);
+    }
+
+    public function user()
+    {
+        return $this->hasMany(User::class, 'user_id', 'user_id');
+    }
+
+    public function post()
+    {
+        return $this->hasMany(Post::class, 'post_id', 'post_id');
     }
 }
