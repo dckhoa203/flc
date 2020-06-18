@@ -10,12 +10,12 @@
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
-      <h5 class="m-0 text-dark">Bài đăng</h5>
+      <h5 class="m-0 text-dark">Danh sách khóa học</h5>
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">admin</a></li>
-      <li class="breadcrumb-item"><a href="{{route('post.index')}}">post</a></li>
+      <li class="breadcrumb-item"><a href="#">course</a></li>
       </ol>
     </div><!-- /.col -->
   </div><!-- /.row -->
@@ -36,12 +36,12 @@
                         <div class="col-sm-12">
                                 <div>
                                     <div class="d-fle">
-                                        <select class="form-control" id="select_category">
+                                        <select class="form-control" id="select_course">
                                             <option value="-1">All</option>
-                                            @foreach($category as $item)
-                                                <option value="{{$item->category_id}}">{{$item->category_name}}</option>
-                                            @endforeach
+                                            <option value="1">Đăng ký thành công</option>
+                                            <option value="0">Chờ xử lý</option>
                                         </select>
+                                        <span id="post-id" style="display:none;">{{$post_id}}</span>
                                     </div>
                                 </div>
                                 <br>
@@ -50,10 +50,10 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tiêu đề</th>
-                                                <th>Nội dung</th>
-                                                <th>Thể loại</th>
-                                                <th>Trạng thái</th>
+                                                <th>Tên học viên</th>
+                                                <th>Email</th>
+                                                <th>SDT</th>
+                                                <th>trạng thái</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -65,22 +65,27 @@
                                             @foreach ($data as $index => $item)
                                                 <tr>
                                                     <td>{{$index + 1}}</td>
-                                                    <td>{{$item->title}}</td>
-                                                    <td class="post-summary">{{$item->content}}</td>
-                                                    <td>{{$item->category->category_name}}</td>
+                                                    <td>{{$item->user[0]->name}}</td>
+                                                    <td>{{$item->user[0]->email}}</td>
+                                                    <td>{{$item->user[0]->tel}}</td>
                                                     <td>
-                                                        @if($item->status == 0) Chờ phê duyệt
-                                                        @else Đã duyệt @endif
+                                                        @if($item->status == 1) Đăng ký thành công
+                                                        @else Chờ xử lý @endif
                                                     </td>
+                                                    {{-- <td id="invoice-id" style="display:none;">{{$item->invoice_id}}</td> --}}
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
-                                                        <td>
-                                                            <form action="{{ route('col.post.destroy', $item->post_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Collaborator\PostController@show',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem bài viết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
-                                                                <a  href="{{ action('Collaborator\PostController@edit',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                    <td>
+                                                        @if($item->status == 1)
+                                                        <a  href="{{ action('Collaborator\InvoiceController@report',$item->invoice_id) }}" data-toggle="tooltip" data-placement="top" title="Xem chi tiết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
+                                                        @else
+                                                            <form action="{{ route('col.invoice.approved', $item->invoice_id) }}" method="post" class="delete_form">
+                                                                <a  href="{{ action('Collaborator\InvoiceController@report',$item->invoice_id) }}" data-toggle="tooltip" data-placement="top" title="Xem chi tiết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
+                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Phê duyệt"><i class="fas fa-check"></i></button>
                                                             </form>
-                                                        </td>
+                                                        @endif
+                                                        
+                                                    </td>
                                                     {{-- @else --}}
                                                         {{-- <td></td> --}}
                                                     {{-- @endif --}}
@@ -107,16 +112,17 @@
 @section('script')
 <script>
     $(document).ready(function() {
-		$('#select_category').on('change',function(){
-            const category_id = $('#select_category')[0].value;
-            // alert(category_id);
+		$('#select_course').on('change',function(){
+            const status = $('#select_course')[0].value;
+            const post = "{!! $post_id !!}";
+            // alert(post_id);
 			$.ajax({
 				headers: {
           			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           		},
 				type: 'post',
-				url: "{{route('col.post.getdata')}}",
-                data:{id: category_id},
+				url: "{{route('col.invoice.getreportdata')}}",
+                data:{ status: status, post: post},
 				success: function(data){
                     $('.showContent').html(data)	
 				},

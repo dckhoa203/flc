@@ -30,37 +30,51 @@ class LoginController extends Controller
         $this->config($config);
         $this->request['password'] =  Hash::make($request->password);
         $data = $this->model->web_insert($this->request);
-        if($data == false) {
-            return back()->with('success', 'Đăng ký thất bại');
-        }
         
         return back()->with('success', 'Đăng ký thành công');
     }
 
     public function login(Request $request){
-      $email = $request->email;
-      $password = $request->password;
-      dd(Auth::attempt(['email' => $email, 'password' =>$password]));
-      if( Auth::attempt(['email' => $email, 'password' =>$password])) {
-        $user = User::where('email',$email)->first();
+      
+      $username = $request->get('username');
+      $password = $request->get('password');
+
+      if( Auth::attempt(['username' => $username, 'password' =>$password]) == true) {
+        $user = User::where('username',$username)->first();
+        
         if ($user){
-          if ( Hash::check($password,$user->password) ){
+          if ( Hash::check($password,$user->password) == true){
+            $request->session()->put('user', $user);
             if ( $user->role == 0 ){
-              return redirect('admin')->with('success', '');;
-            } else if($user->role == 1){
-              return redirect('col')->with('success', '');
-            } else if($user->role == 2){
-              return redirect('mem')->with('success', '');
+              return redirect('admin');
+            } elseif($user->role == 1) {
+              return redirect('col');
             } else {
-              return redirect('/')->with('success', '');
+              return redirect('cus');
             }
           }
         }
       }
+
+      return back();
     }
   
-    public function logout(){
-      Auth::logout();
+    public function logout(Request $request){
+      $request->session()->forget('user');
       return redirect('/');
     }
+
+    public function profile(Request $request)
+    {
+        $user_id = $request->session()->get('user')->user_id;
+        $data = User::where('user_id', $user_id)->first();
+        return view('login.profile', compact('data'));
+    }
+
+    public function postprofile(Request $request){
+      // $user_id = $request->session()->get('user')->user_id;
+
+      // $user = User::findOrFail($user_id);
+      
+  }
 }

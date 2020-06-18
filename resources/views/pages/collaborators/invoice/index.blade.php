@@ -10,12 +10,12 @@
 @section('content-header')
 <div class="row">
     <div class="col-sm-6">
-      <h5 class="m-0 text-dark">Bài đăng</h5>
+      <h5 class="m-0 text-dark">Danh sách lớp</h5>
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">admin</a></li>
-      <li class="breadcrumb-item"><a href="{{route('post.index')}}">post</a></li>
+      <li class="breadcrumb-item"><a href="{{route('invoice.index')}}">invoice</a></li>
       </ol>
     </div><!-- /.col -->
   </div><!-- /.row -->
@@ -38,8 +38,8 @@
                                     <div class="d-fle">
                                         <select class="form-control" id="select_category">
                                             <option value="-1">All</option>
-                                            @foreach($category as $item)
-                                                <option value="{{$item->category_id}}">{{$item->category_name}}</option>
+                                            @foreach($branch as $item)
+                                                <option value="{{$item->branch_id}}">{{$item->branch_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -50,10 +50,10 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tiêu đề</th>
-                                                <th>Nội dung</th>
-                                                <th>Thể loại</th>
-                                                <th>Trạng thái</th>
+                                                <th>Tên lớp</th>
+                                                <th>Ngày khai giảng</th>
+                                                <th>Giá</th>
+                                                <th>Sỉ số</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -66,20 +66,13 @@
                                                 <tr>
                                                     <td>{{$index + 1}}</td>
                                                     <td>{{$item->title}}</td>
-                                                    <td class="post-summary">{{$item->content}}</td>
-                                                    <td>{{$item->category->category_name}}</td>
-                                                    <td>
-                                                        @if($item->status == 0) Chờ phê duyệt
-                                                        @else Đã duyệt @endif
-                                                    </td>
+                                                    <td>{{$item->start}}</td>
+                                                    <td>{{$item->rental}}</td>
+                                                    {{-- <td>{{$item->user->branch->center->center_name}}</td> --}}
+                                                    <td>{{$count[$index]}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
-                                                            <form action="{{ route('col.post.destroy', $item->post_id) }}" method="post" class="delete_form">
-                                                                <a  href="{{ action('Collaborator\PostController@show',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem bài viết">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
-                                                                <a  href="{{ action('Collaborator\PostController@edit',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
-                                                            </form>
+                                                            <a  href="{{ action('Collaborator\InvoiceController@list',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem danh sách lớp">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>
                                                         </td>
                                                     {{-- @else --}}
                                                         {{-- <td></td> --}}
@@ -115,7 +108,7 @@
           			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           		},
 				type: 'post',
-				url: "{{route('col.post.getdata')}}",
+				url: "{{route('col.invoice.getdata')}}",
                 data:{id: category_id},
 				success: function(data){
                     $('.showContent').html(data)	

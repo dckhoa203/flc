@@ -37,7 +37,9 @@
     @include('layouts.widgets.app.site-section')
 
     {{-- Đăng ký tư vấn --}}
-    @include('layouts.widgets.app.advisory')
+    @if(Session::has('user') == false)
+      @include('layouts.widgets.app.advisory')
+    @endif
     
     {{-- Footer --}}
     @include('layouts.widgets.app.footer')

@@ -18,22 +18,14 @@ class PostController extends Controller
     // Hàm đỗ dữ liệu của một Khoa ra trang index
     public function index (Request $request)
     {
-        $user_id = 2;
-        $data = Post::where([['status', 1],['user_id', $user_id]])
+        $user_id = $request->session()->get('user')->user_id;
+        
+        $data = Post::where('user_id', $user_id)
                 ->orderBy('post_id', 'DESC')
                 ->get();
+        $category = Category::all();
         
-        return view('pages.collaborators.post.index', compact('data'));
-    }
-
-    public function not_approved (Request $request)
-    {
-        $user_id = 2;
-        $data = Post::where([['status', 0],['user_id', $user_id]])
-                ->orderBy('post_id', 'DESC')
-                ->get();
-        
-        return view('pages.collaborators.post.index', compact('data'));
+        return view('pages.collaborators.post.index', compact('data', 'category'));
     }
 
     public function create (Request $request)
@@ -50,9 +42,12 @@ class PostController extends Controller
             'request' => $request,
         ];
         $this->config($config);
+
+        $this->request['user_id'] = $request->session()->get('user')->user_id;
+
         $data = $this->model->web_insert($this->request);
         
-        return redirect('admin/post')->with('success', 'Thêm thành công');
+        return redirect('col/post')->with('success', 'Thêm thành công');
     }
 
     public function edit($post_id)
@@ -60,7 +55,7 @@ class PostController extends Controller
         $post = Post::findOrFail($post_id);
         $category = Category::all();
 
-        return view('pages.admins.post.edit', compact('post', 'category'));
+        return view('pages.collaborators.post.edit', compact('post', 'category'));
     }
 
     public function update(Request $request, $post_id)
@@ -68,11 +63,12 @@ class PostController extends Controller
         $post = Post::find($post_id);
         $post->title = $request->get('title');
         $post->content = $request->get('content');
-        $post->user_id = $request->get('user_id');
-        $post->categogy_id = $request->get('categogy_id');
+        $post->start = $request->get('start');
+        $post->rental = $request->get('rental');
+        $post->category_id = $request->get('category_id');
         $post->save();
         
-        return redirect('admin/post')->with('success', 'Cập nhật thành công');
+        return redirect('col/post')->with('success', 'Cập nhật thành công');
     }
 
     public function destroy($post_id)
@@ -83,55 +79,26 @@ class PostController extends Controller
         return back()->with('success', 'Xóa thành công!');
     }
 
-    public function get_approved() 
-    {
-        $data = Post::where('status', 0)
-                ->orderBy('post_id', 'DESC')
-                ->get();
-
-        return view('pages.admins.post.approved', ['data' => $data]);
-    }
-
-    public function approved(Request $request)
-    {
-        $post_id = $request->get('id');
-        $data = Post::find($post_id);
-        $data->status = 1;
-        $data->save();
-                
-        return response()->json(["result" => "success"]);
-    }
-
-    public function removed(Request $request)
-    {
-        $post_id = $request->get('id');;
-
-        $data = Post::findOrFail($post_id);
-        $data->delete();
-                
-        return response()->json(["result" => "success"]);
-    }
-
     public function get_data(Request $request)
     {        
-        
-        $id = $request->id;
-        if ($id == -1 ){
-            $data = Post::where('status', 1)
+        $user_id = $request->session()->get('user')->user_id;
+        $category_id = $request->id;
+        if ($category_id == -1 ){
+            $data = Post::where('user_id', $user_id)
                     ->orderBy('post_id', 'DESC')->get();
         } else {
-            $data = Post::where([['category_id', $id],['status', 1]])
+            $data = Post::where([['category_id', $category_id],['user_id', $user_id]])
                     ->orderBy('post_id', 'DESC')
                     ->get();
         }
 
-        return view('pages.admins.post.getdata',['data' => $data ? $data : '']);
+        return view('pages.collaborators.post.getdata',['data' => $data ? $data : '']);
     }
 
     public function show($post_id)
     {
-        $post = Post::findOrFail($post_id)->first();
+        $data = Post::where('post_id', $post_id)->first();
 
-        return view('pages.admins.post.show', ['post' => $post]);
+        return view('pages.collaborators.post.show', ['data' => $data]);
     }
 }

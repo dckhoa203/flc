@@ -32,6 +32,12 @@
                     </select>
                 </div>
                 <div class="form-group">
+                  <input type="date" class="form-control" id="start" name="start" placeholder="Ngày khai giảng">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="rental" name="rental" placeholder="Giá tiền">
+                </div>
+                <div class="form-group">
                     <div class="mb-3">
                       <textarea class="textarea" placeholder="Nội dung" name="content"
                         style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>

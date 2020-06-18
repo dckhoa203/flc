@@ -42,6 +42,7 @@ class PostController extends Controller
             'request' => $request,
         ];
         $this->config($config);
+        $this->request['user_id'] = $request->session()->get('user')->user_id;
         $data = $this->model->web_insert($this->request);
         
         return redirect('admin/post')->with('success', 'Thêm thành công');

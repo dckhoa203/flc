@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Base\BaseResponseWeb;
+use Session;
 
 class Controller extends BaseController
 {
@@ -147,5 +148,26 @@ class Controller extends BaseController
 
         // Return data and code
         return $this->response::response($this->key, $this->data);
+    }
+
+    public function checkadmin()
+    {
+        if(Session::get('user')->role == 0){
+            return true;
+        } else return false;
+    }
+
+    public function checkcol()
+    {
+        if(Session::get('col')->role == 1){
+            return true;
+        } else return false;
+    }
+    
+    public function checkmem()
+    {
+        if(Session::get('col')->role == 2){
+            return true;
+        } else return false;
     }
 }

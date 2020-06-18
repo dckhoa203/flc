@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Branch;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/','HomeController@index')->name('home');
 
 Route::get('/login','LoginController@index')->name('login');
 Route::post('/postlogin','LoginController@login')->name('postlogin');
 route::post('/register','LoginController@register')->name('register');
 Route::get('/logout','LoginController@logout')->name('logout');
 
-// Route::group(['middleware' => ['auth']], function () {
-    // Route::group(['middleware' => ['checkadmin']], function () {
+Route::group(['middleware' => ['checklogin']], function () {
+    Route::get('/profile', 'LoginController@profile')->name('profile');
+    Route::get('/postprofile', 'LoginController@postprofile')->name('postprofile');
+
+    Route::group(['middleware' => ['checkadmin']], function () {
         Route::prefix('admin')->group(function() {
             Route::get('/', 'Master\PostController@get_approved')->name('admin.index');
             // CITY
@@ -121,7 +124,7 @@ Route::get('/logout','LoginController@logout')->name('logout');
                 Route::get('/show/{comment_id}', 'Master\CommentController@show')->name('comment.show');
             });
 
-            // COURSE
+            // INVOICE
             Route::prefix('invoice')->group(function () {
                 Route::get('/', 'Master\InvoiceController@index')->name('invoice.index');
                 Route::post('/getdata', "Master\InvoiceController@get_data")->name('invoice.getdata');
@@ -130,28 +133,37 @@ Route::get('/logout','LoginController@logout')->name('logout');
                 Route::post('/getreportdata', 'Master\InvoiceController@getreportdata')->name('invoice.getreportdata');
             });
         });
-    // });
+    });
+    
 
     // COLLABORATOR
-    Route::prefix('col')->group(function() {
-        Route::get('/', 'Collaborator\PostController@not_approved')->name('col.post.index');
-        // POST
-        Route::prefix('post')->group(function () {
-            Route::get('/', 'Collaborator\PostController@index')->name('col.post.index');
-            Route::get('/create', 'Collaborator\PostController@create')->name('post.create');
-            // Route::post('/create_submit', 'Collaborator\PostController@create_submit')->name('post.create_submit');
-            // Route::get('/edit/{post_id}', 'Collaborator\PostController@edit')->name('post.edit');
-            // Route::post('/update/{post_id}', 'Collaborator\PostController@update')->name('post.update');
-            // Route::post('/destroy/{post_id}', "Collaborator\PostController@destroy")->name('post.destroy');
-            // Route::get('/get_approved', 'Collaborator\PostController@get_approved')->name('post.get_approved');
-            // Route::post('/approved', 'Collaborator\PostController@approved')->name('post.approved');
-            // Route::post('/removed', 'Collaborator\PostController@removed')->name('post.removed');
-            // Route::post('/getdata', 'Collaborator\PostController@get_data')->name('post.getdata');
-            // Route::get('/show/{post_id}', 'Collaborator\PostController@show')->name('post.show');
+    Route::group(['middleware' => ['checkcol']], function () {
+        Route::prefix('col')->group(function() {
+            Route::get('/', 'Collaborator\PostController@index')->name('col.index');
+            // POST
+            Route::prefix('post')->group(function () {
+                Route::get('/', 'Collaborator\PostController@index')->name('col.post.index');
+                Route::get('/create', 'Collaborator\PostController@create')->name('col.post.create');
+                Route::post('/create_submit', 'Collaborator\PostController@create_submit')->name('col.post.create_submit');
+                Route::get('/edit/{post_id}', 'Collaborator\PostController@edit')->name('col.post.edit');
+                Route::post('/update/{post_id}', 'Collaborator\PostController@update')->name('col.post.update');
+                Route::post('/destroy/{post_id}', "Collaborator\PostController@destroy")->name('col.post.destroy');
+                Route::post('/getdata', 'Collaborator\PostController@get_data')->name('col.post.getdata');
+                Route::get('/show/{post_id}', 'Collaborator\PostController@show')->name('col.post.show');
+            });
+
+            // INVOICE
+            Route::prefix('invoice')->group(function () {
+                Route::get('/', 'Collaborator\InvoiceController@index')->name('col.invoice.index');
+                Route::post('/getdata', "Collaborator\InvoiceController@get_data")->name('col.invoice.getdata');
+                Route::get('/list/{post_id}', 'Collaborator\InvoiceController@list')->name('col.invoice.list');
+                Route::get('/report/{invoice_id}', 'Collaborator\InvoiceController@report')->name('col.invoice.report');
+                Route::post('/getreportdata', 'Collaborator\InvoiceController@getreportdata')->name('col.invoice.getreportdata');
+                Route::post('/approved/{invoice_id}', 'Collaborator\InvoiceController@approved')->name('col.invoice.approved');
+            });
         });
     });
     
 
-// });
+});
 
-Route::get('/test','LoginController@test');

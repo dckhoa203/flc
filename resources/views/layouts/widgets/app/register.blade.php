@@ -5,8 +5,11 @@
       <div class="form-group">
         <input type="text" class="form-control" name="name" placeholder="Họ tên" required>
       </div>
-      <div class="form-group">
+      {{-- <div class="form-group">
         <input type="text" class="form-control" name="email" placeholder="Email" required>
+      </div> --}}
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" required>
       </div>
       <div class="form-group">
         <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>

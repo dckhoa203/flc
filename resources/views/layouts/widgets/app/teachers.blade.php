@@ -9,19 +9,22 @@
       </div>
 
       <div class="row">
-
-        <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="teacher text-center">
-            <img src="{{asset('src/app/images/person_1.jpg')}}" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-            <div class="py-2">
-              <h3 class="text-black">Benjamin Stone</h3>
-              <p class="position">Physics Teacher</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p>
+        @foreach ($center as $item)
+          <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="teacher text-center">
+              <img src="{{asset('src/app/images/person_1.jpg')}}" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
+              <div class="py-2">
+                <h3 class="text-black">{{$item->center_name}}</h3>
+                <p class="position">Số điện thoại: {{$item->tel}}</p>
+                <p class="position">Wibsite: {{$item->website}}</p>
+                <p>Tỉnh thành: Cần Thơ</p>
+              </div>
             </div>
           </div>
-        </div>
+        @endforeach
+        
 
-        <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+        {{-- <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
           <div class="teacher text-center">
             <img src="{{asset('src/app/images/person_2.jpg')}}" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
             <div class="py-2">
@@ -41,7 +44,7 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>

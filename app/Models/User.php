@@ -15,6 +15,7 @@ class User extends BaseModel
 
     protected $fillable = [
         'user_id',
+        'username',
         'email',
         'password',
         'name',
@@ -58,5 +59,10 @@ class User extends BaseModel
     public function branch()
     {
         return $this->hasOne(Branch::class, 'user_id', 'user_id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class,'district_id','district_id');
     }
 }

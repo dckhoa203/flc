@@ -11,8 +11,9 @@
                 <p data-aos="fade-up" data-aos-delay="300"><a href="#" class="btn btn-primary py-3 px-5 btn-pill">Đăng ký ngai</a></p>
 
               </div>
-
-              @include('layouts.widgets.app.register')
+              @if(Session::has('user') == false)
+                @include('layouts.widgets.app.register')
+              @endif
             </div>
           </div>
           
