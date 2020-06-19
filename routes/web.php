@@ -163,6 +163,18 @@ Route::group(['middleware' => ['checklogin']], function () {
             });
         });
     });
+
+    // MEMBER
+    Route::group(['middleware' => ['checkmem']], function () {
+        Route::prefix('mem')->group(function() {
+            Route::get('/', 'Member\InvoiceController@index')->name('mem.index');
+            Route::post('/getdata', 'Member\InvoiceController@get_data')->name('mem.invoice.getdata');
+            Route::get('/report/{invoice_id}', 'Member\InvoiceController@report')->name('mem.invoice.report');
+            Route::get('/register', 'Member\InvoiceController@register_course')->name('mem.register');
+            Route::post('/postregister/{post_id}', 'Member\InvoiceController@post_register_course')->name('mem.postregister');
+            Route::get('/show/{post_id}', 'Member\InvoiceController@show')->name('mem.show');
+        });
+    });
     
 
 });

@@ -50,7 +50,7 @@ class LoginController extends Controller
             } elseif($user->role == 1) {
               return redirect('col');
             } else {
-              return redirect('cus');
+              return redirect('mem');
             }
           }
         }

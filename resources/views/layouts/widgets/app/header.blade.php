@@ -21,6 +21,7 @@
                     <a class="dropdown-item" href="{{route('col.index')}}">Hệ thống quản lý</a>
                     <a class="dropdown-item" href="{{route('col.post.create')}}">Tạo bài đăng</a>
                     <a class="dropdown-item" href="{{route('col.invoice.index')}}">Danh sách đăng ký</a>
+                    <a class="dropdown-item" href="{{route('profile')}}">Thoong tin tài khoản</a>
                   </div>
                 </li>
               @endif
@@ -30,8 +31,9 @@
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                     aria-expanded="false">Quản lý</a>
                   <div class="dropdown-menu dropdown-secondary">
-                    <a class="dropdown-item" href="#">Quản lý khóa học</a>
-                    <a class="dropdown-item" href="#">Quản lý bình luận</a>
+                    <a class="dropdown-item" href="{{route('mem.index')}}">Khóa học của tôi</a>
+                    <a class="dropdown-item" href="{{route('mem.register')}}">Đằng ký khóa học</a>
+                    <a class="dropdown-item" href="{{route('profile')}}">Thông tin tài khoản</a>
                   </div>
                 </li>
               @endif

@@ -177,6 +177,34 @@
               </a>
             </li>
           @endif
+
+          @if(Session::get('user')->role == 2)
+            {{-- Khóa học --}}
+            <li class="nav-item">
+              <a href="{{route('mem.index')}}" class="nav-link">
+                <i class="nav-icon fa fa-university" aria-hidden="true"></i>
+                <p>
+                  Khóa học của tôi
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('mem.register')}}" class="nav-link">
+                <i class="nav-icon fa fa-plus" aria-hidden="true"></i>
+                <p>
+                  Đăng ký khóa học
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-commenting-o" aria-hidden="true"></i>
+                <p>
+                  Quản lý bình luận
+                </p>
+              </a>
+            </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
