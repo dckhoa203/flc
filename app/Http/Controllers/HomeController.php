@@ -15,4 +15,11 @@ class HomeController extends Controller
 
         return view('home', \compact('post', 'center'));
     }
+
+    public function show_post($post_id)
+    {
+        $data = Post::where('post_id', $post_id)->first();
+
+        return view('show_post', \compact('data'));
+    }
 }

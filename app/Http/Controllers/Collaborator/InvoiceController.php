@@ -21,14 +21,17 @@ class InvoiceController extends Controller
     // Hàm đỗ dữ liệu của một Khoa ra trang index
     public function index (Request $request)
     {
+        $count = [];
+        $waiting = [];
         $user_id = $request->session()->get('user')->user_id;
         $data = Post::where([['status', 1], ['user_id', $user_id]])->get();
         $branch = Branch::where('user_id', $user_id)->get();
         foreach($data as $index => $item){
             $count[$index] = Invoice::where('post_id', $item->post_id)->count('user_id');
+            $waiting[$index] = Invoice::where([['post_id', $item->post_id], ['status', 0]])->count('user_id');
         }  
         
-        return view('pages.collaborators.invoice.index', compact('data', 'count', 'branch'));
+        return view('pages.collaborators.invoice.index', compact('data', 'count', 'branch', 'waiting'));
     }
 
     public function get_data(Request $request)

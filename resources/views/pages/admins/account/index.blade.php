@@ -56,12 +56,12 @@
                                                 <td>{{$item->email}}</td>
                                                 <td>{{$item->name}}</td>
                                                 <td>{{$item->tel}}</td>
-                                                <td>@if($item->sex == 1) Nam @else Nữ @endif</td>
+                                                <td>@if($item->sex == null)  @elseif($item->sex == 1) Nam @else Nữ @endif</td>
                                                 <td>{{$item->dob}}</td>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <td>
                                                         <form action="{{ route('account.destroy', $item->user_id) }}" method="post" class="delete_form">
-                                                            <a  href="{{ action('Master\AccountController@edit',$item->user_id) }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil text-inverse m-r-10 fa-lg"></i></a>
+                                                            
                                                             @csrf
                                                             <button type="submit" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-placement="top" title="Xóa"><i class="fal fa-trash-alt fa-lg"></i></button>
                                                         </form>

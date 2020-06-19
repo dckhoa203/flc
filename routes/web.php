@@ -17,6 +17,7 @@ use App\Models\Post;
 Auth::routes();
 
 Route::get('/','HomeController@index')->name('home');
+Route::get('/show_post/{post_id}','HomeController@show_post')->name('show_post');
 
 Route::get('/login','LoginController@index')->name('login');
 Route::post('/postlogin','LoginController@login')->name('postlogin');

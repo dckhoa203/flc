@@ -172,7 +172,7 @@
               <a href="{{route('col.invoice.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                 <p>
-                  Hóa đơn
+                  Khóa học
                 </p>
               </a>
             </li>

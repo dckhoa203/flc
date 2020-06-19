@@ -15,7 +15,7 @@
           @foreach ($post as $item)
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="{{asset('src/app/images')}}/{{$item->image}}" alt="Image" class="img-fluid"></a>
+                <a href="{{route('show_post', $item->post_id)}}"><img src="{{asset('src/app/images')}}/{{$item->image}}" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
                 <span class="course-price">{{$item->rental}}</span>

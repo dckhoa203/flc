@@ -54,6 +54,7 @@
                                                 <th>Ngày khai giảng</th>
                                                 <th>Giá</th>
                                                 <th>Sỉ số</th>
+                                                <th>Chờ duyệt</th>
                                                 {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                     <th>Chức năng</th>
                                                 {{-- @else --}}
@@ -70,6 +71,7 @@
                                                     <td>{{$item->rental}}</td>
                                                     {{-- <td>{{$item->user->branch->center->center_name}}</td> --}}
                                                     <td>{{$count[$index]}}</td>
+                                                    <td>{{$waiting[$index]}}</td>
                                                     {{-- @if (Auth::user()->hasRole('Admin')) --}}
                                                         <td>
                                                             <a  href="{{ action('Collaborator\InvoiceController@list',$item->post_id) }}" data-toggle="tooltip" data-placement="top" title="Xem danh sách lớp">&nbsp;&nbsp;&nbsp;<i class="fas fa-eye" style="color: black; font-size: 17px;"></i></a>

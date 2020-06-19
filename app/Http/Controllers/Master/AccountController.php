@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Branch;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -29,7 +31,8 @@ class AccountController extends Controller
 
     public function create (Request $request)
     {
-        return view('pages.admins.account.create');
+        $branch = Branch::all();
+        return view('pages.admins.account.create', \compact('branch'));
     }
 
     public function create_submit(Request $request)
@@ -39,6 +42,8 @@ class AccountController extends Controller
             'request' => $request,
         ];
         $this->config($config);
+        $this->request['password'] =  Hash::make($request->password);
+
         $data = $this->model->web_insert($this->request);
         
         return redirect('admin/account')->with('success', 'Thêm thành công');
