@@ -65,9 +65,15 @@
                                             @foreach ($data as $index => $item)
                                                 <tr>
                                                     <td>{{$index + 1}}</td>
+                                                    @if(!empty($item->user[0]))
                                                     <td>{{$item->user[0]->name}}</td>
                                                     <td>{{$item->user[0]->email}}</td>
                                                     <td>{{$item->user[0]->tel}}</td>
+                                                    @else
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    @endif
                                                     <td>
                                                         @if($item->status == 1) Đăng ký thành công
                                                         @else Chờ xử lý @endif
